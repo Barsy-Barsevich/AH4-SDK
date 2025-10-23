@@ -1,0 +1,3 @@
+[submodule "wch-isp"]
+	path = wch-isp
+	url = git@github.com:Barsy-Barsevich/wch-isp.git
