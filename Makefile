@@ -45,7 +45,7 @@ ifneq (${CODE_MODEL},'')
 endif
 BUILD_FLAGS += -${OPTIMIZATION_LEVEL}
 
-INCLUDE_DIRS = -I Core/Peripheral/inc -I Core/Core
+INCLUDE_DIRS = -I Core/Peripheral/inc -I Core/Core -I Core/AH4-specific/inc
 
 .PHONY: build-libs
 build-libs:
@@ -63,8 +63,14 @@ build-libs:
 		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
 		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/Peripheral/build/$${OUT_FILENAME}.o; \
 	done
+	@echo "=====<Compiling AH4-specific libs>==============="
+	mkdir Core/AH4-specific/build || echo "build dir already created."
+	for source in Core/AH4-specific/src/*.c; do \
+		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
+		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/AH4-specific/build/$${OUT_FILENAME}.o; \
+	done
 	@echo "=====<Making an archive>========================="
-	${AR} rcs Core/libch32v30x.a Core/Peripheral/build/* Core/Core/build/* Core/startup.o
+	${AR} rcs Core/libch32v30x.a Core/Peripheral/build/* Core/Core/build/* Core/AH4-specific/build/* Core/startup.o
 	@echo "=====<Totals>===================================="
 	${SIZE} -t --format=berkeley Core/libch32v30x.a
 	@echo "=====<Building components>======================="
@@ -94,6 +100,6 @@ build-project:
 
 clear-project:
 	rm -r ${PROJECT_DIR}/build
-	rm ${PROJECT_DIR}/*.elf ${PROJECT_DIR}/*.bin ${PROJECT_DIR}/*.hex
+	rm ${PROJECT_DIR}/*.elf ${PROJECT_DIR}/*.hex
 
 	
