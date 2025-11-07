@@ -1,9 +1,6 @@
 [submodule "wch-isp"]
 	path = wch-isp
 	url = git@github.com:Barsy-Barsevich/wch-isp.git
-[submodule "components/ICM42688_Barsotion"]
-	path = components/ICM42688_Barsotion
-	url = git@github.com:Barsy-Barsevich/ICM42688_Barsotion.git
 [submodule "components/ICM45686_Barsotion"]
 	path = components/ICM45686_Barsotion
 	url = git@github.com:Barsy-Barsevich/ICM45686_Barsotion.git
