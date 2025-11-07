@@ -1,0 +1,3 @@
+Core/Core/build/*
+Core/Peripheral/build/*
+examples/*/build/*
