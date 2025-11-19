@@ -58,6 +58,24 @@ __attribute__((section(".text.ah4specific"))) int ah4_clock_config()
 	return 0;
 }
 
+int ah4_usb_clock_init(void)
+{
+	// USB 48 MHz clock from USBPLL
+	RCC_USBCLK48MConfig( RCC_USBCLK48MCLKSource_USBPHY );
+    // HSPLLSRC: HSE source
+    RCC_USBHSPLLCLKConfig( RCC_HSBHSPLLCLKSource_HSE );
+	// USBHSPREDIV = 2
+	RCC_USBHSConfig( RCC_USBPLL_Div2 );
+	// USBPLL reference clock - 8 MHz
+	RCC_USBHSPLLCKREFCLKConfig( RCC_USBHSPLLCKREFCLK_8M );
+	// Enable USBHS PHY
+	RCC_USBHSPHYPLLALIVEcmd( ENABLE );
+	// Enable USBHS domain clock
+	RCC_AHBPeriphClockCmd( RCC_AHBPeriph_USBHS, ENABLE );
+}
+
+
+
 void ah4_led_init(void)
 {
 	RCC_APB2PeriphClockCmd (

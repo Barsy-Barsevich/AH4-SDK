@@ -6,6 +6,7 @@ extern "C" {
 
 #include <stdint.h>
 #include "ch32v30x.h"
+#include "ch32v30x_rcc.h"
 #include "ah4-pindefs.h"
 
 int ah4_clock_config(void);
