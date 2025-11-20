@@ -45,7 +45,7 @@ ifneq (${CODE_MODEL},'')
 endif
 BUILD_FLAGS += -${OPTIMIZATION_LEVEL}
 
-INCLUDE_DIRS = -I Core/Peripheral/inc -I Core/Core -I Core/Devices/inc
+INCLUDE_DIRS = -I Core/Peripheral/inc -I Core/Core -I Core/Devices/inc -I Core/USB/inc
 
 .PHONY: build-libs
 build-libs:
@@ -69,8 +69,15 @@ build-libs:
 		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
 		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/Devices/build/$${OUT_FILENAME}.o; \
 	done
+	@echo "=====<Compiling USB module>======================"
+	mkdir Core/USB/build || echo "build dir already created."
+	for source in Core/USB/src/*.c; do \
+		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
+		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/USB/build/$${OUT_FILENAME}.o; \
+	done	
 	@echo "=====<Making an archive>========================="
-	${AR} rcs Core/libch32v30x.a Core/Peripheral/build/* Core/Core/build/* Core/Devices/build/* Core/startup.o
+	${AR} rcs Core/libch32v30x.a Core/Peripheral/build/* Core/Core/build/* Core/Devices/build/* \
+		Core/USB/build/* Core/startup.o
 	@echo "=====<Totals>===================================="
 	${SIZE} -t --format=berkeley Core/libch32v30x.a
 	@echo "=====<Building components>======================="
