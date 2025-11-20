@@ -120,7 +120,7 @@ void USBHS_Device_Init ( FunctionalState sta )
     if( sta )
     {
         USBHSD->CONTROL = USBHS_UC_CLR_ALL | USBHS_UC_RESET_SIE;
-        system_timer_delay_us(10);
+        ah4_time_delay_us(10);
         USBHSD->CONTROL &= ~USBHS_UC_RESET_SIE;
         USBHSD->HOST_CTRL = USBHS_UH_PHY_SUSPENDM;
         USBHSD->CONTROL = USBHS_UC_DMA_EN | USBHS_UC_INT_BUSY | USBHS_UC_SPEED_HIGH;
@@ -133,7 +133,7 @@ void USBHS_Device_Init ( FunctionalState sta )
     else
     {
         USBHSD->CONTROL = USBHS_UC_CLR_ALL | USBHS_UC_RESET_SIE;
-        system_timer_delay_us(10);
+        ah4_time_delay_us(10);
         USBHSD->CONTROL = 0;
         NVIC_DisableIRQ( USBHS_IRQn );
     }

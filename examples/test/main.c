@@ -1,5 +1,5 @@
 #include "ah4-specific.h"
-#include "system_timer.h"
+#include "ah4-series.h"
 #include "UART.h"
 #include "ch32v30x_usbhs_device.h"
 
@@ -46,7 +46,7 @@ void usb_config()
 	RCC_AHBPeriphClockCmd( RCC_AHBPeriph_USBHS, ENABLE );
 	
 	USBHSD->CONTROL = USBHS_UC_CLR_ALL | USBHS_UC_RESET_SIE;
-	system_timer_delay_ms(10);
+	ah4_time_delay_ms(10);
 	USBHSD->CONTROL &= ~USBHS_UC_RESET_SIE;
 	USBHSD->SPEED_TYPE = 2;
 	USBHSD->HOST_CTRL = USBHS_UH_PHY_SUSPENDM;
@@ -63,7 +63,7 @@ int main()
 {
 	ah4_clock_config();
 	ah4_led_init();
-	system_timer_init();
+	ah4_time_init();
 
 	ah4_i2cm_dis_led_set(1);
 	usb_config();
@@ -77,7 +77,7 @@ int main()
 		uint32_t aaa[] = {0x41424344, 0x0A474645};
 		aaa[0] = (aN & 0xFF) | 0x41415F00 | 0x30;
 		write_usb_data((uint32_t)aaa, 4*2);
-		system_timer_delay_ms(500);
+		ah4_time_delay_ms(500);
 	}
 
     return 0;

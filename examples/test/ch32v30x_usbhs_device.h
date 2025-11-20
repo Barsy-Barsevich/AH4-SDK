@@ -19,7 +19,7 @@
 #include "ch32v30x_usb.h"
 #include "usb_desc.h"
 #include "UART.h"
-#include "system_timer.h"
+#include "ah4-series.h"
 
 #ifdef __cplusplus
 extern "C" {
