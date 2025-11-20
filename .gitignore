@@ -1,6 +1,8 @@
 Core/*.o
 Core/Core/build/*
 Core/Peripheral/build/*
+Core/Devices/build/*
+Core/USB/build/*
 Core/*.a
 examples/*/build/*
 examples/*/*.elf
