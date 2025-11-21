@@ -89,6 +89,8 @@ build-libs:
 clear-libs:
 	rm -r Core/Core/build
 	rm -r Core/Peripheral/build
+	rm -r Core/Devices/build
+	rm -r Core/USB/build
 	rm Core/*.o Core/*.a
 	rm components/*/*.a
 
