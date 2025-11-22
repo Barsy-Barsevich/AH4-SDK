@@ -1,6 +1,6 @@
 Core/*.o
-Core/Core/build/*
-Core/Peripheral/build/*
+Core/MRS-Core/build/*
+Core/MRS-Peripheral/build/*
 Core/Devices/build/*
 Core/USB/build/*
 Core/*.a

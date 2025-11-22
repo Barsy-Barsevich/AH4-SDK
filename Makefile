@@ -45,23 +45,23 @@ ifneq (${CODE_MODEL},'')
 endif
 BUILD_FLAGS += -${OPTIMIZATION_LEVEL}
 
-INCLUDE_DIRS = -I Core/Peripheral/inc -I Core/Core -I Core/Devices/inc -I Core/USB/inc
+INCLUDE_DIRS = -I Core/MRS-Peripheral/inc -I Core/MRS-Core -I Core/Devices/inc -I Core/USB/inc
 
 .PHONY: build-libs
 build-libs:
 	@echo "=====<Compiling startup file>===================="
 	${CC} ${BUILD_FLAGS} -c Core/startup.S -o Core/startup.o
 	@echo "=====<Compiling MRS core libs>==================="
-	mkdir Core/Core/build || echo "build dir already created."
-	for source in Core/Core/*.c; do \
+	mkdir Core/MRS-Core/build || echo "build dir already created."
+	for source in Core/MRS-Core/*.c; do \
 		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
-		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/Core/build/$${OUT_FILENAME}.o; \
+		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/MRS-Core/build/$${OUT_FILENAME}.o; \
 	done
 	@echo "=====<Compiling MRS peripheral libs>============="
-	mkdir Core/Peripheral/build || echo "build dir already created."
-	for source in Core/Peripheral/src/*.c; do \
+	mkdir Core/MRS-Peripheral/build || echo "build dir already created."
+	for source in Core/MRS-Peripheral/src/*.c; do \
 		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
-		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/Peripheral/build/$${OUT_FILENAME}.o; \
+		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/MRS-Peripheral/build/$${OUT_FILENAME}.o; \
 	done
 	@echo "=====<Compiling Devices libs>===================="
 	mkdir Core/Devices/build || echo "build dir already created."
@@ -76,10 +76,10 @@ build-libs:
 		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/USB/build/$${OUT_FILENAME}.o; \
 	done	
 	@echo "=====<Making an archive>========================="
-	${AR} rcs Core/libch32v30x.a Core/Peripheral/build/* Core/Core/build/* Core/Devices/build/* \
+	${AR} rcs Core/libah4-sdk.a Core/MRS-Peripheral/build/* Core/MRS-Core/build/* Core/Devices/build/* \
 		Core/USB/build/* Core/startup.o
 	@echo "=====<Totals>===================================="
-	${SIZE} -t --format=berkeley Core/libch32v30x.a
+	${SIZE} -t --format=berkeley Core/libah4-sdk.a
 	@echo "=====<Building components>======================="
 	@for component in components/*; do \
 		make -C $$component build-debug; \
@@ -87,8 +87,8 @@ build-libs:
 
 .PHONY: clear-libs
 clear-libs:
-	rm -r Core/Core/build
-	rm -r Core/Peripheral/build
+	rm -r Core/MRS-Core/build
+	rm -r Core/MRS-Peripheral/build
 	rm -r Core/Devices/build
 	rm -r Core/USB/build
 	rm Core/*.o Core/*.a
