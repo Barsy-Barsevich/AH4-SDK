@@ -3,7 +3,9 @@
 *for developing, research & fun*
 
 ---
+![](./Core/cover.jpg)
 
+---
 - [AH4 hardware repository](https://github.com/Barsy-Barsevich/Barsotion-AH4)
 
 ## Установка
