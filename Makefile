@@ -107,6 +107,8 @@ build-project:
 	${OBJCOPY} -O ihex ${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/firmware.hex
 	${SIZE} -t --format=berkeley ${PROJECT_DIR}/firmware.elf
 
+disasm-project:
+	${OBJDUMP} -S ${PROJECT_DIR}/firmware.elf > ${PROJECT_DIR}/firmware.lst
 
 clear-project:
 	rm -r ${PROJECT_DIR}/build
