@@ -8,3 +8,4 @@ examples/*/build/*
 examples/*/*.elf
 examples/*/*.bin
 examples/*/*.hex
+examples/*/*.lst
