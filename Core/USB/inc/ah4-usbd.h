@@ -186,6 +186,8 @@ extern void UART2_USB_Init( void );                                             
 void ah4_usb_init(void);
 void ah4_usb_deinit(void);
 void ah4_usb_send(const char *src, uint16_t len);
+uint16_t ah4_usb_seek(void);
+uint16_t ah4_usb_receive(char *dst, uint16_t len);
 
 #if defined(__cplusplus)
 }

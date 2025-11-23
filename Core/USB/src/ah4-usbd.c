@@ -1081,3 +1081,13 @@ void ah4_usb_send(const char *src, uint16_t len)
     NVIC_EnableIRQ( USBHS_IRQn );
 }
 
+uint16_t ah4_usb_seek(void)
+{
+    return USBHSD->RX_LEN;
+}
+
+uint16_t ah4_usb_receive(char *dst, uint16_t len)
+{
+    memcpy((void*)dst, (void*)UART2_Tx_Buf, len);
+    return len;
+}
