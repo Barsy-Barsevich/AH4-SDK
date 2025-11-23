@@ -1,0 +1,48 @@
+#pragma once
+
+#define PL1_BUTTON_PORT			GPIOA
+#define PL1_BUTTON_PIN			GPIO_Pin_1
+#define PL1_LED_PORT			GPIOA
+#define PL1_LED_PIN				GPIO_Pin_6
+#define PL1_ADC_IN_PORT			GPIOA
+#define PL1_ADC_IN_PIN			GPIO_Pin_5
+#define PL1_CHRG_PORT			GPIOA
+#define PL1_CHRG_PIN			GPIO_Pin_7
+// USB
+#define PL1_USB_DP_PORT			GPIOB
+#define PL1_USB_DP_PIN			GPIO_Pin_7
+#define PL1_USB_DM_PORT			GPIOB
+#define PL1_USB_DM_PIN			GPIO_Pin_6
+// I2C
+#define PL1_SCL_PORT			GPIOB
+#define PL1_SCL_PIN				GPIO_Pin_10
+#define PL1_SDA_PORT			GPIOB
+#define PL1_SDA_PIN				GPIO_Pin_11
+// SPI
+#define PL1_MISO_PORT			GPIOB
+#define PL1_MISO_PIN			GPIO_Pin_14
+#define PL1_MOSI_PORT			GPIOB
+#define PL1_MOSI_PIN			GPIO_Pin_15
+#define PL1_SCK_PORT			GPIOB
+#define PL1_SCK_PIN				GPIO_Pin_13
+#define PL1_IMU_NCS_PORT		GPIOB
+#define PL1_IMU_NCS_PIN			GPIO_Pin_12
+// Exti
+#define PL1_IMU_INT_PORT		GPIOC
+#define PL1_IMU_INT_PIN			GPIO_Pin_2
+#define PL1_BMP_INT_PORT		GPIOC
+#define PL1_BMP_INT_PIN			GPIO_Pin_3
+// SDIO
+#define PL1_SDIO_D0_PORT		GPIOC
+#define PL1_SDIO_D0_PIN			GPIO_Pin_8
+#define PL1_SDIO_D1_PORT		GPIOC
+#define PL1_SDIO_D1_PIN			GPIO_Pin_9
+#define PL1_SDIO_D2_PORT		GPIOC
+#define PL1_SDIO_D2_PIN			GPIO_Pin_10
+#define PL1_SDIO_D3_PORT		GPIOC
+#define PL1_SDIO_D3_PIN			GPIO_Pin_11
+#define PL1_SDIO_CLK_PORT		GPIOC
+#define PL1_SDIO_CLK_PIN		GPIO_Pin_12
+#define PL1_SDIO_CMD_PORT		GPIOD
+#define PL1_SDIO_CMD_PIN		GPIO_Pin_2
+
