@@ -4,3 +4,6 @@
 [submodule "components/ICM45686_Barsotion"]
 	path = components/ICM45686_Barsotion
 	url = git@github.com:Barsy-Barsevich/ICM45686_Barsotion.git
+[submodule "minichlink-307"]
+	path = minichlink-307
+	url = git@github.com:Barsy-Barsevich/minichlink-307.git
