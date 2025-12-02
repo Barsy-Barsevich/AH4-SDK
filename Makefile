@@ -96,19 +96,24 @@ clear-libs:
 
 build-project:
 	@echo "=====<Compiling project>========================="
-	mkdir ${PROJECT_DIR}/build || echo "build dir already created."
-	for source in ${PROJECT_DIR}/*.c; do \
-		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
-		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o ${PROJECT_DIR}/build/$${OUT_FILENAME}.o; \
-	done
-	for source in ${PROJECT_DIR}/*.S; do \
-		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
-		${CC} ${BUILD_FLAGS} -c $$source -o ${PROJECT_DIR}/build/$${OUT_FILENAME}.o; \
-	done
+	@mkdir ${PROJECT_DIR}/build || echo "[ I ] build dir already created."
+	@if [ -f {PROJECT_DIR}/*.c ]; then \
+		for source in ${PROJECT_DIR}/*.c; do \
+			OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
+			${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o ${PROJECT_DIR}/build/$${OUT_FILENAME}.o; \
+		done \
+	fi
+	@if [ -f {PROJECT_DIR}/*.S ]; then \
+		for source in ${PROJECT_DIR}/*.S; do \
+			OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
+			${CC} ${BUILD_FLAGS} -c $$source -o ${PROJECT_DIR}/build/$${OUT_FILENAME}.o; \
+		done \
+	fi
 	@echo "=====<Linking everything together>==============="
 	${LD} -T Core/linker.ld --format=elf32-littleriscv --output=${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/build/*.o Core/*.a -L /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f -lc
 	#components/*/*.a
 	${OBJCOPY} -O ihex ${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/firmware.hex
+	${OBJCOPY} -O binary ${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/firmware.bin
 	${SIZE} -t --format=berkeley ${PROJECT_DIR}/firmware.elf
 
 disasm-project:
