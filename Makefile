@@ -45,7 +45,7 @@ ifneq (${CODE_MODEL},'')
 endif
 BUILD_FLAGS += -${OPTIMIZATION_LEVEL}
 
-INCLUDE_DIRS = -I Core/MRS-Peripheral/inc -I Core/MRS-Core -I Core/Devices/inc -I Core/USB/inc
+INCLUDE_DIRS = -I Core/MRS-Peripheral/inc -I Core/MRS-Core -I Core/MRS-FATFS/inc -I Core/Devices/inc -I Core/USB/inc
 
 .PHONY: build-libs
 build-libs:
@@ -63,6 +63,12 @@ build-libs:
 		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
 		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/MRS-Peripheral/build/$${OUT_FILENAME}.o; \
 	done
+	@echo "=====<Compiling MRS SDIO FATFS lib>=============="
+	mkdir Core/MRS-FATFS/build || echo "build dir already created."
+	for source in Core/MRS-FATFS/src/*.c; do \
+		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
+		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/MRS-FATFS/build/$${OUT_FILENAME}.o; \
+	done
 	@echo "=====<Compiling Devices libs>===================="
 	mkdir Core/Devices/build || echo "build dir already created."
 	for source in Core/Devices/src/*.c; do \
@@ -77,7 +83,7 @@ build-libs:
 	done	
 	@echo "=====<Making an archive>========================="
 	${AR} rcs Core/libah4-sdk.a Core/MRS-Peripheral/build/* Core/MRS-Core/build/* Core/Devices/build/* \
-		Core/USB/build/* Core/startup.o
+		Core/USB/build/* Core/MRS-FATFS/build/* Core/startup.o
 	@echo "=====<Totals>===================================="
 	${SIZE} -t --format=berkeley Core/libah4-sdk.a
 	@echo "=====<Building components>======================="
@@ -97,12 +103,10 @@ clear-libs:
 build-project:
 	@echo "=====<Compiling project>========================="
 	@mkdir ${PROJECT_DIR}/build || echo "[ I ] build dir already created."
-	@if [ -f {PROJECT_DIR}/*.c ]; then \
-		for source in ${PROJECT_DIR}/*.c; do \
-			OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
-			${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o ${PROJECT_DIR}/build/$${OUT_FILENAME}.o; \
-		done \
-	fi
+	for source in ${PROJECT_DIR}/*.c; do \
+		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
+		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o ${PROJECT_DIR}/build/$${OUT_FILENAME}.o; \
+	done
 	@if [ -f {PROJECT_DIR}/*.S ]; then \
 		for source in ${PROJECT_DIR}/*.S; do \
 			OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
