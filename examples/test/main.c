@@ -2,7 +2,7 @@
 #include "ah4-series.h"
 #include "ah4-usbd.h"
 
-
+static char buffer[50];
 
 int main()
 {
@@ -14,15 +14,17 @@ int main()
 	ah4_usb_init();
 	ah4_ois_dis_led_set(1);
 	
-	
 	while (1)
 	{
-		while (USBHSD->RX_LEN == 0);
-		uint16_t aN = USBHSD->RX_LEN;
-		uint32_t aaa[] = {0x41424344, 0x0A474645};
-		aaa[0] = (aN & 0xFF) | 0x41415F00 | 0x30;
-		// ah4_usb_send((char*)aaa, 4*2);
-		ah4_usb_send((char*)UART2_Tx_Buf, aN);
+		while (ah4_usb_seek() == 0);
+		uint16_t received = ah4_usb_seek();
+		if (received > sizeof(buffer))
+		{
+			received = sizeof(buffer);
+		}
+		// ah4_usb_receive(buffer, received);
+		memcpy(buffer, UART2_Tx_Buf, received);
+		ah4_usb_send(UART2_Tx_Buf, received);
 		ah4_time_delay_ms(500);
 	}
 
