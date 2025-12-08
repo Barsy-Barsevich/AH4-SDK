@@ -46,6 +46,7 @@ endif
 BUILD_FLAGS += -${OPTIMIZATION_LEVEL}
 
 INCLUDE_DIRS = -I Core/MRS-Peripheral/inc -I Core/MRS-Core -I Core/MRS-FATFS/inc -I Core/Devices/inc -I Core/USB/inc
+INCLUDE_DIRS += -I components/ICM45686_Barsotion/inc
 
 .PHONY: build-libs
 build-libs:
@@ -98,6 +99,7 @@ clear-libs:
 	rm -r Core/Devices/build
 	rm -r Core/USB/build
 	rm Core/*.o Core/*.a
+	rm -r components/*/build
 	rm components/*/*.a
 
 build-project:
@@ -114,8 +116,7 @@ build-project:
 		done \
 	fi
 	@echo "=====<Linking everything together>==============="
-	${LD} -T Core/linker.ld --format=elf32-littleriscv --output=${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/build/*.o Core/*.a -L /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f -lc
-	#components/*/*.a
+	${LD} -T Core/linker.ld --format=elf32-littleriscv --output=${PROJECT_DIR}/firmware.elf -Map ${PROJECT_DIR}/firmware.map ${PROJECT_DIR}/build/*.o Core/*.a -L /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f -lc components/*/*.a
 	${OBJCOPY} -O ihex ${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/firmware.hex
 	${OBJCOPY} -O binary ${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/firmware.bin
 	${SIZE} -t --format=berkeley ${PROJECT_DIR}/firmware.elf
