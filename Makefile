@@ -19,9 +19,11 @@ build-sdk:
 FLASHER = sudo ./wch-isp/wch-isp
 FIRMWARE_STARTADDR = 0x08000000
 
-upload:
+upload-via-bootloader:
 	make -C wch-isp upload firmware=''../${firmware}''
 
+upload-swd:
+	./minichlink-307/minichlink-307 -w ${firmware} 0x08000000
 
 
 PROJECT_DIR = ${target}
@@ -33,7 +35,7 @@ OBJDUMP = ${TOOLCHAIN_PREFIX}-objdump
 OBJCOPY = ${TOOLCHAIN_PREFIX}-objcopy
 SIZE = ${TOOLCHAIN_PREFIX}-size
 
-BUILD_FLAGS = 
+BUILD_FLAGS = -pedantic-errors -Wall -Wextra -Wpedantic -Wduplicated-branches -Wduplicated-cond -Wfloat-equal -Wlogical-op -Wsign-conversion -Wrestrict
 ifneq (${ARCH},'')
 	BUILD_FLAGS += -march=${ARCH}
 endif
