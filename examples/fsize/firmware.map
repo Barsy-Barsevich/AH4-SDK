@@ -1,0 +1,783 @@
+Archive member included to satisfy reference by file (symbol)
+
+Core/libah4-sdk.a(ch32v30x_misc.c.o)
+                              examples/fsize//build/main.c.o (NVIC_PriorityGroupConfig)
+Core/libah4-sdk.a(ah4-series.c.o)
+                              examples/fsize//build/main.c.o (ah4_clock_config)
+Core/libah4-sdk.a(pl1-specific.c.o)
+                              examples/fsize//build/main.c.o (pl1_led_init)
+Core/libah4-sdk.a(ah4-usbd.c.o)
+                              examples/fsize//build/main.c.o (ah4_usb_init)
+Core/libah4-sdk.a(usb_desc.c.o)
+                              Core/libah4-sdk.a(ah4-usbd.c.o) (TAB_USB_HS_OSC_DESC)
+Core/libah4-sdk.a(ff.c.o)     examples/fsize//build/main.c.o (f_mount)
+Core/libah4-sdk.a(sdio.c.o)   examples/fsize//build/main.c.o (SD_Init)
+Core/libah4-sdk.a(startup.o)  (_start)
+Core/libah4-sdk.a(ch32v30x_dma.c.o)
+                              Core/libah4-sdk.a(ah4-usbd.c.o) (DMA_DeInit)
+Core/libah4-sdk.a(ch32v30x_gpio.c.o)
+                              Core/libah4-sdk.a(pl1-specific.c.o) (GPIO_Init)
+Core/libah4-sdk.a(ch32v30x_rcc.c.o)
+                              Core/libah4-sdk.a(ah4-usbd.c.o) (RCC_AHBPeriphClockCmd)
+Core/libah4-sdk.a(ch32v30x_sdio.c.o)
+                              Core/libah4-sdk.a(sdio.c.o) (SDIO_DeInit)
+Core/libah4-sdk.a(system_ch32v30x.c.o)
+                              Core/libah4-sdk.a(startup.o) (SystemInit)
+Core/libah4-sdk.a(diskio.c.o)
+                              Core/libah4-sdk.a(ff.c.o) (disk_status)
+/opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-itoa.o)
+                              examples/fsize//build/main.c.o (itoa)
+/opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-utoa.o)
+                              /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-itoa.o) (__utoa)
+/opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcmp.o)
+                              Core/libah4-sdk.a(ff.c.o) (memcmp)
+/opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strchr.o)
+                              Core/libah4-sdk.a(ff.c.o) (strchr)
+/opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-stpcpy.o)
+                              examples/fsize//build/main.c.o (stpcpy)
+/opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memset.o)
+                              Core/libah4-sdk.a(ff.c.o) (memset)
+/opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcpy.o)
+                              examples/fsize//build/main.c.o (memcpy)
+/opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strlen.o)
+                              examples/fsize//build/main.c.o (strlen)
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x00000000         0x00020000         xr
+RAM              0x20000000         0x00008000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+                0x00000800                        __stack_size = 0x800
+                [!provide]                        PROVIDE (_stack_size = __stack_size)
+
+.init           0x00000000        0x4
+                0x00000000                        _sinit = .
+                0x00000000                        . = ALIGN (0x4)
+ *(SORT_NONE(.init))
+ .init          0x00000000        0x4 Core/libah4-sdk.a(startup.o)
+                0x00000000                _start
+                0x00000004                        . = ALIGN (0x4)
+                0x00000004                        _einit = .
+
+.vector         0x00000004      0x1bc
+ *(.vector)
+ .vector        0x00000004      0x1a0 Core/libah4-sdk.a(startup.o)
+                0x000001c0                        . = ALIGN (0x40)
+ *fill*         0x000001a4       0x1c 
+
+.text           0x000001c0     0x8540
+                0x000001c0                        . = ALIGN (0x4)
+ *(.text)
+ .text          0x000001c0      0x1fc examples/fsize//build/main.c.o
+                0x000001c0                print
+                0x000001e6                show_sdcard_info
+ .text          0x000003bc       0x62 Core/libah4-sdk.a(ch32v30x_misc.c.o)
+                0x000003bc                NVIC_PriorityGroupConfig
+                0x000003c2                NVIC_Init
+ .text          0x0000041e       0x84 Core/libah4-sdk.a(ah4-series.c.o)
+                0x0000041e                ah4_time_init
+                0x00000430                ah4_time_get_ticks
+                0x0000043a                ah4_time_get_us
+                0x00000446                ah4_time_get_ms
+                0x0000045e                ah4_time_delay_us
+                0x00000478                ah4_time_delay_ms
+ .text          0x000004a2       0x42 Core/libah4-sdk.a(pl1-specific.c.o)
+                0x000004a2                pl1_led_init
+                0x000004d0                pl1_led_set
+ .text          0x000004e4      0xdd4 Core/libah4-sdk.a(ah4-usbd.c.o)
+                0x000004e4                USBHS_IRQHandler
+                0x0000058a                USBHS_Device_Endp_Init
+                0x00000608                ah4_usb_deinit
+                0x00000634                USBHS_Endp_DataUp
+                0x00000790                endpoint0_datain_interrupt
+                0x0000083c                endpoint2_datain_interrupt
+                0x0000087a                endpoint3_datain_interrupt
+                0x000008b0                endpoint0_dataout_interrupt
+                0x000008c6                endpoint2_dataout_interrupt
+                0x00000926                USBHD_Send_Resume
+                0x00000928                UART2_ParaInit
+                0x000009aa                USBHS_IRQHandler_real
+                0x0000104a                ah4_usb_init
+                0x0000112e                UART2_DMAInit
+                0x00001200                UART2_Init
+                0x00001230                UART2_USB_Init
+                0x00001252                ah4_usb_send
+                0x00001296                ah4_usb_seek
+                0x000012a0                ah4_usb_receive
+ .text          0x000012b8        0x0 Core/libah4-sdk.a(usb_desc.c.o)
+ .text          0x000012b8     0x30cc Core/libah4-sdk.a(ff.c.o)
+                0x0000271c                f_mount
+                0x00002778                f_open
+                0x00002a4a                f_read
+                0x00002c0e                f_write
+                0x00002e1e                f_sync
+                0x00002f46                f_close
+                0x00002f7a                f_lseek
+                0x00003144                f_opendir
+                0x000031e0                f_closedir
+                0x00003222                f_readdir
+                0x000032a4                f_stat
+                0x000032f6                f_getfree
+                0x00003436                f_truncate
+                0x0000356e                f_unlink
+                0x00003654                f_mkdir
+                0x0000384a                f_rename
+                0x000039f6                f_mkfs
+ .text          0x00004384     0x210a Core/libah4-sdk.a(sdio.c.o)
+                0x00004384                SDIO_Clock_Set
+                0x00004394                SD_PowerOFF
+                0x000043a6                SD_GetCardInfo
+                0x000046e4                SD_SetDeviceMode
+                0x000046f8                CmdError
+                0x00004730                CmdResp7Error
+                0x0000477c                CmdResp1Error
+                0x000047e8                SD_SelectDeselect
+                0x0000481e                SD_ProcessIRQSrc
+                0x00004952                SDIO_IRQHandler
+                0x00004954                SD_PowerON
+                0x00004b86                CmdResp3Error
+                0x00004bc2                CmdResp2Error
+                0x00004c1e                CmdResp6Error
+                0x00004cd4                SD_InitializeCards
+                0x00004e1e                IsCardProgramming
+                0x00004ed4                SD_SendStatus
+                0x00004f28                SD_GetState
+                0x00004f7a                FindSCR
+                0x0000513a                SDEnWideBus
+                0x000051f8                SD_EnableWideBusOperation
+                0x00005250                SD_Init
+                0x00005370                convert_from_bytes_to_power_of_two
+                0x0000538a                SD_DMA_Config
+                0x00005414                SD_ReadBlock
+                0x00005706                SD_ReadMultiBlocks
+                0x00005a6c                SD_WriteBlock
+                0x00005ea0                SD_WriteMultiBlocks
+                0x0000633a                SD_ReadDisk
+                0x000063e8                SD_WriteDisk
+ .text          0x0000648e        0x0 Core/libah4-sdk.a(startup.o)
+ .text          0x0000648e      0x394 Core/libah4-sdk.a(ch32v30x_dma.c.o)
+                0x0000648e                DMA_DeInit
+                0x000066a6                DMA_Init
+                0x000066e2                DMA_StructInit
+                0x00006710                DMA_Cmd
+                0x00006726                DMA_ITConfig
+                0x0000673a                DMA_SetCurrDataCounter
+                0x0000673e                DMA_GetCurrDataCounter
+                0x00006746                DMA_GetFlagStatus
+                0x00006788                DMA_ClearFlag
+                0x000067b4                DMA_GetITStatus
+                0x000067f6                DMA_ClearITPendingBit
+ .text          0x00006822      0x68a Core/libah4-sdk.a(ch32v30x_gpio.c.o)
+                0x00006822                GPIO_DeInit
+                0x000068d0                GPIO_AFIODeInit
+                0x000068e8                GPIO_Init
+                0x000069b8                GPIO_StructInit
+                0x000069c8                GPIO_ReadInputDataBit
+                0x000069d4                GPIO_ReadInputData
+                0x000069dc                GPIO_ReadOutputDataBit
+                0x000069e8                GPIO_ReadOutputData
+                0x000069f0                GPIO_SetBits
+                0x000069f4                GPIO_ResetBits
+                0x000069f8                GPIO_WriteBit
+                0x00006a02                GPIO_Write
+                0x00006a06                GPIO_PinLockConfig
+                0x00006a16                GPIO_EventOutputConfig
+                0x00006a2e                GPIO_EventOutputCmd
+                0x00006a46                GPIO_PinRemapConfig
+                0x00006b4c                GPIO_EXTILineConfig
+                0x00006b76                GPIO_ETH_MediaInterfaceConfig
+                0x00006b9a                GPIO_IPD_Unused
+ .text          0x00006eac      0x786 Core/libah4-sdk.a(ch32v30x_rcc.c.o)
+                0x00006eac                RCC_DeInit
+                0x00006efe                RCC_HSEConfig
+                0x00006f3c                RCC_WaitForHSEStartUp
+                0x00006f78                RCC_AdjustHSICalibrationValue
+                0x00006f8a                RCC_HSICmd
+                0x00006fa0                RCC_PLLConfig
+                0x00006fde                RCC_PLLCmd
+                0x00007002                RCC_SYSCLKConfig
+                0x00007010                RCC_GetSYSCLKSource
+                0x0000701a                RCC_HCLKConfig
+                0x0000702a                RCC_PCLK1Config
+                0x0000703a                RCC_PCLK2Config
+                0x00007050                RCC_ITConfig
+                0x0000706e                RCC_ADCCLKConfig
+                0x00007080                RCC_LSEConfig
+                0x000070ac                RCC_LSICmd
+                0x000070c2                RCC_RTCCLKConfig
+                0x000070ce                RCC_RTCCLKCmd
+                0x000070ee                RCC_GetClocksFreq
+                0x000072f6                RCC_AHBPeriphClockCmd
+                0x00007314                RCC_APB2PeriphClockCmd
+                0x00007332                RCC_APB1PeriphClockCmd
+                0x00007350                RCC_APB2PeriphResetCmd
+                0x0000736e                RCC_APB1PeriphResetCmd
+                0x0000738c                RCC_BackupResetCmd
+                0x000073ac                RCC_ClockSecuritySystemCmd
+                0x000073d0                RCC_MCOConfig
+                0x000073da                RCC_GetFlagStatus
+                0x00007414                RCC_ClearFlag
+                0x00007424                RCC_GetITStatus
+                0x00007432                RCC_ClearITPendingBit
+                0x0000743c                RCC_PREDIV1Config
+                0x00007450                RCC_PREDIV2Config
+                0x00007460                RCC_PLL2Config
+                0x00007474                RCC_PLL2Cmd
+                0x00007498                RCC_PLL3Config
+                0x000074aa                RCC_PLL3Cmd
+                0x000074ce                RCC_USBFSCLKConfig
+                0x000074e8                RCC_I2S2CLKConfig
+                0x00007500                RCC_I2S3CLKConfig
+                0x0000751a                RCC_AHBPeriphResetCmd
+                0x00007538                RCC_ADCCLKADJcmd
+                0x00007552                RCC_RNGCLKConfig
+                0x0000756c                RCC_ETH1GCLKConfig
+                0x00007586                RCC_ETH1G_125Mcmd
+                0x000075aa                RCC_USBHSConfig
+                0x000075c4                RCC_USBHSPLLCLKConfig
+                0x000075de                RCC_USBHSPLLCKREFCLKConfig
+                0x000075f8                RCC_USBHSPHYPLLALIVEcmd
+                0x0000761c                RCC_USBCLK48MConfig
+ .text          0x00007632      0x2b4 Core/libah4-sdk.a(ch32v30x_sdio.c.o)
+                0x00007632                SDIO_DeInit
+                0x00007662                SDIO_Init
+                0x00007692                SDIO_StructInit
+                0x000076ac                SDIO_ClockCmd
+                0x000076c4                SDIO_SetPowerState
+                0x000076d6                SDIO_GetPowerState
+                0x000076e0                SDIO_ITConfig
+                0x000076fe                SDIO_DMACmd
+                0x00007714                SDIO_SendCommand
+                0x00007736                SDIO_CmdStructInit
+                0x0000774c                SDIO_GetCommandResponse
+                0x00007758                SDIO_GetResponse
+                0x0000776e                SDIO_DataConfig
+                0x00007794                SDIO_DataStructInit
+                0x000077ae                SDIO_GetDataCounter
+                0x000077b6                SDIO_ReadData
+                0x000077c0                SDIO_WriteData
+                0x000077ca                SDIO_GetFIFOCount
+                0x000077d2                SDIO_StartSDIOReadWait
+                0x000077ea                SDIO_StopSDIOReadWait
+                0x00007802                SDIO_SetSDIOReadWaitMode
+                0x0000781a                SDIO_SetSDIOOperation
+                0x0000783a                SDIO_SendSDIOSuspendCmd
+                0x0000785a                SDIO_CommandCompletionCmd
+                0x0000787a                SDIO_CEATAITCmd
+                0x0000789a                SDIO_SendCEATACmd
+                0x000078ba                SDIO_GetFlagStatus
+                0x000078c8                SDIO_ClearFlag
+                0x000078d0                SDIO_GetITStatus
+                0x000078de                SDIO_ClearITPendingBit
+ .text          0x000078e6      0x262 Core/libah4-sdk.a(system_ch32v30x.c.o)
+                0x000078e6                SystemInit
+                0x000079b6                SystemCoreClockUpdate
+ .text          0x00007b48       0xea Core/libah4-sdk.a(diskio.c.o)
+                0x00007b48                disk_status
+                0x00007b68                disk_initialize
+                0x00007b88                disk_read
+                0x00007bac                disk_write
+                0x00007bd0                disk_ioctl
+                0x00007c2e                get_fattime
+ .text          0x00007c32        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-itoa.o)
+ .text          0x00007c32        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-utoa.o)
+ .text          0x00007c32        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcmp.o)
+ .text          0x00007c32        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strchr.o)
+ .text          0x00007c32        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-stpcpy.o)
+ .text          0x00007c32       0xa8 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memset.o)
+                0x00007c32                memset
+ .text          0x00007cda        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcpy.o)
+ .text          0x00007cda        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strlen.o)
+ *(.text.*)
+ .text.startup  0x00007cda      0x10a examples/fsize//build/main.c.o
+                0x00007cda                main
+ .text.ah4series
+                0x00007de4      0x10c Core/libah4-sdk.a(ah4-series.c.o)
+                0x00007de4                ah4_clock_config
+ .text.vector_handler
+                0x00007ef0        0x2 Core/libah4-sdk.a(startup.o)
+                0x00007ef0                EXTI2_IRQHandler
+                0x00007ef0                TIM8_TRG_COM_IRQHandler
+                0x00007ef0                TIM8_CC_IRQHandler
+                0x00007ef0                UART8_IRQHandler
+                0x00007ef0                TIM1_CC_IRQHandler
+                0x00007ef0                HardFault_Handler
+                0x00007ef0                TIM6_IRQHandler
+                0x00007ef0                SysTick_Handler
+                0x00007ef0                PVD_IRQHandler
+                0x00007ef0                TIM9_BRK_IRQHandler
+                0x00007ef0                DMA2_Channel8_IRQHandler
+                0x00007ef0                NMI_Handler
+                0x00007ef0                CAN2_RX1_IRQHandler
+                0x00007ef0                EXTI3_IRQHandler
+                0x00007ef0                DMA2_Channel9_IRQHandler
+                0x00007ef0                TIM10_CC_IRQHandler
+                0x00007ef0                USBFS_IRQHandler
+                0x00007ef0                EXTI0_IRQHandler
+                0x00007ef0                I2C2_EV_IRQHandler
+                0x00007ef0                TIM10_TRG_COM_IRQHandler
+                0x00007ef0                CAN2_SCE_IRQHandler
+                0x00007ef0                ADC1_2_IRQHandler
+                0x00007ef0                Break_Point_Handler
+                0x00007ef0                SPI1_IRQHandler
+                0x00007ef0                TAMPER_IRQHandler
+                0x00007ef0                CAN2_RX0_IRQHandler
+                0x00007ef0                TIM8_UP_IRQHandler
+                0x00007ef0                Ecall_M_Mode_Handler
+                0x00007ef0                DMA2_Channel2_IRQHandler
+                0x00007ef0                DMA1_Channel4_IRQHandler
+                0x00007ef0                TIM9_UP_IRQHandler
+                0x00007ef0                USART3_IRQHandler
+                0x00007ef0                RTC_IRQHandler
+                0x00007ef0                DMA1_Channel7_IRQHandler
+                0x00007ef0                CAN1_RX1_IRQHandler
+                0x00007ef0                DVP_IRQHandler
+                0x00007ef0                UART5_IRQHandler
+                0x00007ef0                TIM4_IRQHandler
+                0x00007ef0                DMA2_Channel1_IRQHandler
+                0x00007ef0                I2C1_EV_IRQHandler
+                0x00007ef0                DMA1_Channel6_IRQHandler
+                0x00007ef0                UART4_IRQHandler
+                0x00007ef0                DMA2_Channel4_IRQHandler
+                0x00007ef0                TIM3_IRQHandler
+                0x00007ef0                RCC_IRQHandler
+                0x00007ef0                TIM1_TRG_COM_IRQHandler
+                0x00007ef0                DMA1_Channel1_IRQHandler
+                0x00007ef0                DMA2_Channel7_IRQHandler
+                0x00007ef0                EXTI15_10_IRQHandler
+                0x00007ef0                TIM7_IRQHandler
+                0x00007ef0                CAN2_TX_IRQHandler
+                0x00007ef0                TIM5_IRQHandler
+                0x00007ef0                EXTI9_5_IRQHandler
+                0x00007ef0                ETH_WKUP_IRQHandler
+                0x00007ef0                SPI2_IRQHandler
+                0x00007ef0                TIM10_BRK_IRQHandler
+                0x00007ef0                TIM9_CC_IRQHandler
+                0x00007ef0                DMA2_Channel5_IRQHandler
+                0x00007ef0                DMA1_Channel5_IRQHandler
+                0x00007ef0                EXTI4_IRQHandler
+                0x00007ef0                USB_LP_CAN1_RX0_IRQHandler
+                0x00007ef0                RNG_IRQHandler
+                0x00007ef0                USB_HP_CAN1_TX_IRQHandler
+                0x00007ef0                DMA1_Channel3_IRQHandler
+                0x00007ef0                ETH_IRQHandler
+                0x00007ef0                TIM1_UP_IRQHandler
+                0x00007ef0                WWDG_IRQHandler
+                0x00007ef0                USBHSWakeup_IRQHandler
+                0x00007ef0                DMA2_Channel11_IRQHandler
+                0x00007ef0                Ecall_U_Mode_Handler
+                0x00007ef0                DMA2_Channel6_IRQHandler
+                0x00007ef0                TIM2_IRQHandler
+                0x00007ef0                SW_Handler
+                0x00007ef0                TIM1_BRK_IRQHandler
+                0x00007ef0                DMA2_Channel10_IRQHandler
+                0x00007ef0                EXTI1_IRQHandler
+                0x00007ef0                RTCAlarm_IRQHandler
+                0x00007ef0                TIM10_UP_IRQHandler
+                0x00007ef0                TIM9_TRG_COM_IRQHandler
+                0x00007ef0                UART7_IRQHandler
+                0x00007ef0                USART2_IRQHandler
+                0x00007ef0                UART6_IRQHandler
+                0x00007ef0                I2C2_ER_IRQHandler
+                0x00007ef0                DMA1_Channel2_IRQHandler
+                0x00007ef0                TIM8_BRK_IRQHandler
+                0x00007ef0                CAN1_SCE_IRQHandler
+                0x00007ef0                FLASH_IRQHandler
+                0x00007ef0                USART1_IRQHandler
+                0x00007ef0                SPI3_IRQHandler
+                0x00007ef0                I2C1_ER_IRQHandler
+                0x00007ef0                USBWakeUp_IRQHandler
+                0x00007ef0                DMA2_Channel3_IRQHandler
+ .text.handle_reset
+                0x00007ef2       0x90 Core/libah4-sdk.a(startup.o)
+                0x00007ef2                handle_reset
+ .text.__itoa   0x00007f82       0x50 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-itoa.o)
+                0x00007f82                __itoa
+ .text.itoa     0x00007fd2       0x50 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-itoa.o)
+                0x00007fd2                itoa
+ .text.__utoa   0x00008022       0xae /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-utoa.o)
+                0x00008022                __utoa
+ .text.utoa     0x000080d0        0x4 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-utoa.o)
+                0x000080d0                utoa
+ .text.memcmp   0x000080d4       0x48 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcmp.o)
+                0x000080d4                memcmp
+ .text.strchr   0x0000811c       0xee /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strchr.o)
+                0x0000811c                strchr
+ .text.stpcpy   0x0000820a       0x52 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-stpcpy.o)
+                0x0000820a                stpcpy
+ .text.memcpy   0x0000825c       0xe8 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcpy.o)
+                0x0000825c                memcpy
+ .text.strlen   0x00008344       0x64 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strlen.o)
+                0x00008344                strlen
+ *(.rodata)
+ .rodata        0x000083a8       0x50 Core/libah4-sdk.a(ah4-usbd.c.o)
+ .rodata        0x000083f8      0x11e Core/libah4-sdk.a(usb_desc.c.o)
+                0x000083f8                MyBOSDesc
+                0x00008404                MyQuaDesc
+                0x00008410                MySerNumInfo
+                0x00008428                MyProdInfo
+                0x00008460                MyManuInfo
+                0x0000847c                MyCfgDescr_HS
+                0x000084c0                MyCfgDescr_FS
+                0x00008504                MyDevDescr
+ *fill*         0x00008516        0x2 
+ .rodata        0x00008518       0x2e Core/libah4-sdk.a(ff.c.o)
+ *fill*         0x00008546        0x2 
+ .rodata        0x00008548       0x10 Core/libah4-sdk.a(ch32v30x_rcc.c.o)
+ .rodata        0x00008558       0x10 Core/libah4-sdk.a(system_ch32v30x.c.o)
+                0x00008558                AHBPrescTable
+ *(.rodata*)
+ .rodata.str1.4
+                0x00008568      0x195 examples/fsize//build/main.c.o
+                                0x11e (size before relaxing)
+ .rodata.str1.4
+                0x000086fd        0x0 Core/libah4-sdk.a(ff.c.o)
+                                 0x50 (size before relaxing)
+ .rodata.__utoa.str1.4
+                0x000086fd        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-utoa.o)
+                                 0x25 (size before relaxing)
+ *(.gnu.linkonce.t.*)
+                0x00008700                        . = ALIGN (0x4)
+ *fill*         0x000086fd        0x3 
+
+.rela.dyn       0x00008700        0x0
+ .rela.init     0x00008700        0x0 examples/fsize//build/main.c.o
+ .rela.vector   0x00008700        0x0 examples/fsize//build/main.c.o
+ .rela.text.handle_reset
+                0x00008700        0x0 examples/fsize//build/main.c.o
+
+.fini           0x00008700        0x0
+ *(SORT_NONE(.fini))
+                0x00008700                        . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_etext = .)
+                [!provide]                        PROVIDE (_eitcm = .)
+
+.preinit_array  0x00008700        0x0
+                [!provide]                        PROVIDE (__preinit_array_start = .)
+ *(.preinit_array)
+                [!provide]                        PROVIDE (__preinit_array_end = .)
+
+.init_array     0x00008700        0x0
+                [!provide]                        PROVIDE (__init_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*))
+ *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
+                [!provide]                        PROVIDE (__init_array_end = .)
+
+.fini_array     0x00008700        0x0
+                [!provide]                        PROVIDE (__fini_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*))
+ *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
+                [!provide]                        PROVIDE (__fini_array_end = .)
+
+.ctors
+ *crtbegin.o(.ctors)
+ *crtbegin?.o(.ctors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+ *(SORT_BY_NAME(.ctors.*))
+ *(.ctors)
+
+.dtors
+ *crtbegin.o(.dtors)
+ *crtbegin?.o(.dtors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+ *(SORT_BY_NAME(.dtors.*))
+ *(.dtors)
+
+.dalign         0x20000000        0x0 load address 0x00008700
+                0x20000000                        . = ALIGN (0x4)
+                0x20000000                        PROVIDE (_data_vma = .)
+
+.dlalign        0x00008700        0x0
+                0x00008700                        . = ALIGN (0x4)
+                0x00008700                        PROVIDE (_data_lma = .)
+
+.data           0x20000000       0xa8 load address 0x00008700
+ *(.gnu.linkonce.r.*)
+ *(.data .data.*)
+ .data          0x20000000        0xb examples/fsize//build/main.c.o
+                0x20000000                WriteBuf
+ .data          0x2000000b        0x0 Core/libah4-sdk.a(ch32v30x_misc.c.o)
+ .data          0x2000000b        0x0 Core/libah4-sdk.a(ah4-series.c.o)
+ .data          0x2000000b        0x0 Core/libah4-sdk.a(pl1-specific.c.o)
+ .data          0x2000000b        0x0 Core/libah4-sdk.a(ah4-usbd.c.o)
+ *fill*         0x2000000b        0x1 
+ .data          0x2000000c       0x87 Core/libah4-sdk.a(usb_desc.c.o)
+                0x2000000c                TAB_USB_HS_OSC_DESC
+                0x20000050                TAB_USB_FS_OSC_DESC
+ .data          0x20000093        0x0 Core/libah4-sdk.a(ff.c.o)
+ .data          0x20000093        0x0 Core/libah4-sdk.a(sdio.c.o)
+ .data          0x20000093        0x0 Core/libah4-sdk.a(startup.o)
+ .data          0x20000093        0x0 Core/libah4-sdk.a(ch32v30x_dma.c.o)
+ .data          0x20000093        0x0 Core/libah4-sdk.a(ch32v30x_gpio.c.o)
+ .data          0x20000093        0x0 Core/libah4-sdk.a(ch32v30x_rcc.c.o)
+ .data          0x20000093        0x0 Core/libah4-sdk.a(ch32v30x_sdio.c.o)
+ .data          0x20000093        0x0 Core/libah4-sdk.a(system_ch32v30x.c.o)
+ .data          0x20000093        0x0 Core/libah4-sdk.a(diskio.c.o)
+ .data          0x20000093        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-itoa.o)
+ .data          0x20000093        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-utoa.o)
+ .data          0x20000093        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcmp.o)
+ .data          0x20000093        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strchr.o)
+ .data          0x20000093        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-stpcpy.o)
+ .data          0x20000093        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memset.o)
+ .data          0x20000093        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcpy.o)
+ .data          0x20000093        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strlen.o)
+ *(.gnu.linkonce.d.*)
+                0x20000098                        . = ALIGN (0x8)
+ *fill*         0x20000093        0x5 
+                0x20000898                        PROVIDE (__global_pointer$ = (. + 0x800))
+ *(.sdata .sdata.*)
+ .sdata         0x20000098        0x4 Core/libah4-sdk.a(system_ch32v30x.c.o)
+                0x20000098                SystemCoreClock
+ *(.sdata2.*)
+ *(.gnu.linkonce.s.*)
+                0x200000a0                        . = ALIGN (0x8)
+ *fill*         0x2000009c        0x4 
+ *(.srodata.cst16)
+ *(.srodata.cst8)
+ *(.srodata.cst4)
+ *(.srodata.cst2)
+ *(.srodata .srodata.*)
+ .srodata       0x200000a0        0x4 Core/libah4-sdk.a(usb_desc.c.o)
+                0x200000a0                MyLangDescr
+ .srodata       0x200000a4        0x4 Core/libah4-sdk.a(ch32v30x_rcc.c.o)
+                0x200000a8                        . = ALIGN (0x4)
+                0x200000a8                        PROVIDE (_edata = .)
+
+.bss            0x200000a8     0x2000 load address 0x000087a8
+                0x200000a8                        . = ALIGN (0x4)
+                0x200000a8                        PROVIDE (_sbss = .)
+ *(.sbss*)
+ .sbss          0x200000a8        0x8 examples/fsize//build/main.c.o
+                0x200000a8                res_sd
+                0x200000ac                fnum
+ .sbss          0x200000b0        0x4 Core/libah4-sdk.a(ch32v30x_misc.c.o)
+                0x200000b0                NVIC_Priority_Group
+ .sbss          0x200000b4       0x1c Core/libah4-sdk.a(ah4-usbd.c.o)
+                0x200000b4                UARTx_Rx_DMALastCount
+                0x200000b8                UARTx_Rx_DMACurCount
+                0x200000bc                USBHS_DevEnumStatus
+                0x200000bd                USBHS_DevSleepStatus
+                0x200000be                USBHS_DevSpeed
+                0x200000c0                USBHS_DevMaxPackLen
+                0x200000c2                USBHS_DevAddr
+                0x200000c3                USBHS_DevConfig
+                0x200000c4                USBHS_SetupReqLen
+                0x200000c6                USBHS_SetupReqIndex
+                0x200000c8                USBHS_SetupReqValue
+                0x200000ca                USBHS_SetupReqType
+                0x200000cb                USBHS_SetupReqCode
+                0x200000cc                pUSBHS_Descr
+ .sbss          0x200000d0        0x2 Core/libah4-sdk.a(ff.c.o)
+ *fill*         0x200000d2        0x2 
+ .sbss          0x200000d4       0x15 Core/libah4-sdk.a(sdio.c.o)
+                0x200000d4                tempbuff
+                0x200000d8                TransferEnd
+                0x200000dc                TransferError
+ *(.gnu.linkonce.sb.*)
+ *(.bss*)
+ *fill*         0x200000e9        0x3 
+ .bss           0x200000ec      0xa74 examples/fsize//build/main.c.o
+                0x200004ec                opt
+                0x200004fc                fs
+                0x2000072c                fnew
+                0x20000954                ReadSDBuf
+                0x20000960                work
+ .bss           0x20000b60        0x0 Core/libah4-sdk.a(ch32v30x_misc.c.o)
+ .bss           0x20000b60        0x0 Core/libah4-sdk.a(ah4-series.c.o)
+ .bss           0x20000b60        0x0 Core/libah4-sdk.a(pl1-specific.c.o)
+ .bss           0x20000b60     0x127c Core/libah4-sdk.a(ah4-usbd.c.o)
+                0x20000b60                USBHS_EP0_Buf
+                0x20000ba0                Uart
+                0x20000bcc                UART2_Tx_Buf
+                0x20000fcc                USBHS_EP3_Tx_Buf
+                0x200011cc                USBHS_EP2_Tx_Buf
+                0x200013cc                USBHS_Endp_Busy
+                0x200013dc                UART2_Rx_Buf
+                0x20001bdc                USBHS_EP2_Rx_Buf
+ .bss           0x20001ddc        0x0 Core/libah4-sdk.a(usb_desc.c.o)
+ .bss           0x20001ddc        0xc Core/libah4-sdk.a(ff.c.o)
+ .bss           0x20001de8      0x2c0 Core/libah4-sdk.a(sdio.c.o)
+                0x20001e08                SDIO_CmdInitStructure
+                0x20001e1c                SDIO_InitStructure
+                0x20001e34                SDIO_DataInitStructure
+                0x20001e50                SDCardInfo
+                0x20001ea8                SDIO_DATA_BUFFER
+ .bss           0x200020a8        0x0 Core/libah4-sdk.a(startup.o)
+ .bss           0x200020a8        0x0 Core/libah4-sdk.a(ch32v30x_dma.c.o)
+ .bss           0x200020a8        0x0 Core/libah4-sdk.a(ch32v30x_gpio.c.o)
+ .bss           0x200020a8        0x0 Core/libah4-sdk.a(ch32v30x_rcc.c.o)
+ .bss           0x200020a8        0x0 Core/libah4-sdk.a(ch32v30x_sdio.c.o)
+ .bss           0x200020a8        0x0 Core/libah4-sdk.a(system_ch32v30x.c.o)
+ .bss           0x200020a8        0x0 Core/libah4-sdk.a(diskio.c.o)
+ .bss           0x200020a8        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-itoa.o)
+ .bss           0x200020a8        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-utoa.o)
+ .bss           0x200020a8        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcmp.o)
+ .bss           0x200020a8        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strchr.o)
+ .bss           0x200020a8        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-stpcpy.o)
+ .bss           0x200020a8        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memset.o)
+ .bss           0x200020a8        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcpy.o)
+ .bss           0x200020a8        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strlen.o)
+ *(.gnu.linkonce.b.*)
+ *(COMMON*)
+                0x200020a8                        . = ALIGN (0x4)
+                0x200020a8                        PROVIDE (_ebss = .)
+                [!provide]                        PROVIDE (_end = _ebss)
+                [!provide]                        PROVIDE (end = .)
+
+.stack          0x20007800      0x800
+                [!provide]                        PROVIDE (_heap_end = .)
+                0x20007800                        . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_susrstack = .)
+                0x20008000                        . = (. + __stack_size)
+ *fill*         0x20007800      0x800 
+                0x20008000                        PROVIDE (_eusrstack = .)
+TARGET(elf32-littleriscv)
+LOAD examples/fsize//build/main.c.o
+LOAD Core/libah4-sdk.a
+LOAD /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a
+LOAD components/ICM45686_Barsotion/libicm45686-barsotion-debug.a
+OUTPUT(examples/fsize//firmware.elf elf32-littleriscv)
+
+.comment        0x00000000       0x2c
+ .comment       0x00000000       0x2c examples/fsize//build/main.c.o
+                                 0x1b (size before relaxing)
+ .comment       0x0000002c        0x0 Core/libah4-sdk.a(ch32v30x_misc.c.o)
+                                 0x1b (size before relaxing)
+ .comment       0x0000002c        0x0 Core/libah4-sdk.a(ah4-series.c.o)
+                                 0x1b (size before relaxing)
+ .comment       0x0000002c        0x0 Core/libah4-sdk.a(pl1-specific.c.o)
+                                 0x1b (size before relaxing)
+ .comment       0x0000002c        0x0 Core/libah4-sdk.a(ah4-usbd.c.o)
+                                 0x1b (size before relaxing)
+ .comment       0x0000002c        0x0 Core/libah4-sdk.a(usb_desc.c.o)
+                                 0x1b (size before relaxing)
+ .comment       0x0000002c        0x0 Core/libah4-sdk.a(ff.c.o)
+                                 0x1b (size before relaxing)
+ .comment       0x0000002c        0x0 Core/libah4-sdk.a(sdio.c.o)
+                                 0x1b (size before relaxing)
+ .comment       0x0000002c        0x0 Core/libah4-sdk.a(ch32v30x_dma.c.o)
+                                 0x1b (size before relaxing)
+ .comment       0x0000002c        0x0 Core/libah4-sdk.a(ch32v30x_gpio.c.o)
+                                 0x1b (size before relaxing)
+ .comment       0x0000002c        0x0 Core/libah4-sdk.a(ch32v30x_rcc.c.o)
+                                 0x1b (size before relaxing)
+ .comment       0x0000002c        0x0 Core/libah4-sdk.a(ch32v30x_sdio.c.o)
+                                 0x1b (size before relaxing)
+ .comment       0x0000002c        0x0 Core/libah4-sdk.a(system_ch32v30x.c.o)
+                                 0x1b (size before relaxing)
+ .comment       0x0000002c        0x0 Core/libah4-sdk.a(diskio.c.o)
+                                 0x1b (size before relaxing)
+ .comment       0x0000002c        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-itoa.o)
+                                 0x13 (size before relaxing)
+ .comment       0x0000002c        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-utoa.o)
+                                 0x13 (size before relaxing)
+ .comment       0x0000002c        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcmp.o)
+                                 0x13 (size before relaxing)
+ .comment       0x0000002c        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strchr.o)
+                                 0x13 (size before relaxing)
+ .comment       0x0000002c        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-stpcpy.o)
+                                 0x13 (size before relaxing)
+ .comment       0x0000002c        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcpy.o)
+                                 0x13 (size before relaxing)
+ .comment       0x0000002c        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strlen.o)
+                                 0x13 (size before relaxing)
+
+.note.GNU-stack
+                0x00000000        0x0
+ .note.GNU-stack
+                0x00000000        0x0 examples/fsize//build/main.c.o
+ .note.GNU-stack
+                0x00000000        0x0 Core/libah4-sdk.a(ch32v30x_misc.c.o)
+ .note.GNU-stack
+                0x00000000        0x0 Core/libah4-sdk.a(ah4-series.c.o)
+ .note.GNU-stack
+                0x00000000        0x0 Core/libah4-sdk.a(pl1-specific.c.o)
+ .note.GNU-stack
+                0x00000000        0x0 Core/libah4-sdk.a(ah4-usbd.c.o)
+ .note.GNU-stack
+                0x00000000        0x0 Core/libah4-sdk.a(usb_desc.c.o)
+ .note.GNU-stack
+                0x00000000        0x0 Core/libah4-sdk.a(ff.c.o)
+ .note.GNU-stack
+                0x00000000        0x0 Core/libah4-sdk.a(sdio.c.o)
+ .note.GNU-stack
+                0x00000000        0x0 Core/libah4-sdk.a(ch32v30x_dma.c.o)
+ .note.GNU-stack
+                0x00000000        0x0 Core/libah4-sdk.a(ch32v30x_gpio.c.o)
+ .note.GNU-stack
+                0x00000000        0x0 Core/libah4-sdk.a(ch32v30x_rcc.c.o)
+ .note.GNU-stack
+                0x00000000        0x0 Core/libah4-sdk.a(ch32v30x_sdio.c.o)
+ .note.GNU-stack
+                0x00000000        0x0 Core/libah4-sdk.a(system_ch32v30x.c.o)
+ .note.GNU-stack
+                0x00000000        0x0 Core/libah4-sdk.a(diskio.c.o)
+ .note.GNU-stack
+                0x00000000        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-itoa.o)
+ .note.GNU-stack
+                0x00000000        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-utoa.o)
+ .note.GNU-stack
+                0x00000000        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcmp.o)
+ .note.GNU-stack
+                0x00000000        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strchr.o)
+ .note.GNU-stack
+                0x00000000        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-stpcpy.o)
+ .note.GNU-stack
+                0x00000000        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcpy.o)
+ .note.GNU-stack
+                0x00000000        0x0 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strlen.o)
+
+.riscv.attributes
+                0x00000000       0x67
+ .riscv.attributes
+                0x00000000       0x63 examples/fsize//build/main.c.o
+ .riscv.attributes
+                0x00000063       0x63 Core/libah4-sdk.a(ch32v30x_misc.c.o)
+ .riscv.attributes
+                0x000000c6       0x63 Core/libah4-sdk.a(ah4-series.c.o)
+ .riscv.attributes
+                0x00000129       0x63 Core/libah4-sdk.a(pl1-specific.c.o)
+ .riscv.attributes
+                0x0000018c       0x67 Core/libah4-sdk.a(ah4-usbd.c.o)
+ .riscv.attributes
+                0x000001f3       0x63 Core/libah4-sdk.a(usb_desc.c.o)
+ .riscv.attributes
+                0x00000256       0x63 Core/libah4-sdk.a(ff.c.o)
+ .riscv.attributes
+                0x000002b9       0x63 Core/libah4-sdk.a(sdio.c.o)
+ .riscv.attributes
+                0x0000031c       0x65 Core/libah4-sdk.a(startup.o)
+ .riscv.attributes
+                0x00000381       0x63 Core/libah4-sdk.a(ch32v30x_dma.c.o)
+ .riscv.attributes
+                0x000003e4       0x63 Core/libah4-sdk.a(ch32v30x_gpio.c.o)
+ .riscv.attributes
+                0x00000447       0x63 Core/libah4-sdk.a(ch32v30x_rcc.c.o)
+ .riscv.attributes
+                0x000004aa       0x63 Core/libah4-sdk.a(ch32v30x_sdio.c.o)
+ .riscv.attributes
+                0x0000050d       0x63 Core/libah4-sdk.a(system_ch32v30x.c.o)
+ .riscv.attributes
+                0x00000570       0x63 Core/libah4-sdk.a(diskio.c.o)
+ .riscv.attributes
+                0x000005d3       0x63 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-itoa.o)
+ .riscv.attributes
+                0x00000636       0x63 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-utoa.o)
+ .riscv.attributes
+                0x00000699       0x63 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcmp.o)
+ .riscv.attributes
+                0x000006fc       0x63 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strchr.o)
+ .riscv.attributes
+                0x0000075f       0x63 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-stpcpy.o)
+ .riscv.attributes
+                0x000007c2       0x61 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memset.o)
+ .riscv.attributes
+                0x00000823       0x63 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-memcpy.o)
+ .riscv.attributes
+                0x00000886       0x63 /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f/libc.a(libc_a-strlen.o)
