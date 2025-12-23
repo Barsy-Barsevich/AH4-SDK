@@ -47,7 +47,7 @@ ifneq (${CODE_MODEL},'')
 endif
 BUILD_FLAGS += -${OPTIMIZATION_LEVEL}
 
-INCLUDE_DIRS = -I Core/MRS-Peripheral/inc -I Core/MRS-Core -I Core/MRS-FATFS/inc -I Core/Devices/inc -I Core/USB/inc
+INCLUDE_DIRS = -I Core/MRS-Peripheral/inc -I Core/MRS-Core -I Core/MRS-FATFS/inc -I Core/Devices/inc -I Core/USB/USBD/inc -I Core/USB/USBMS/inc
 INCLUDE_DIRS += -I components/ICM45686_Barsotion/inc
 
 .PHONY: build-libs
@@ -79,14 +79,19 @@ build-libs:
 		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/Devices/build/$${OUT_FILENAME}.o; \
 	done
 	@echo "=====<Compiling USB module>======================"
-	mkdir Core/USB/build || echo "build dir already created."
-	for source in Core/USB/src/*.c; do \
+	mkdir Core/USB/USBD/build || echo "build dir already created."
+	for source in Core/USB/USBD/src/*.c; do \
 		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
-		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/USB/build/$${OUT_FILENAME}.o; \
-	done	
+		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/USB/USBD/build/$${OUT_FILENAME}.o; \
+	done
+	mkdir Core/USB/USBMS/build || echo "build dir already created."
+	for source in Core/USB/USBMS/src/*.c; do \
+		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
+		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/USB/USBMS/build/$${OUT_FILENAME}.o; \
+	done
 	@echo "=====<Making an archive>========================="
 	${AR} rcs Core/libah4-sdk.a Core/MRS-Peripheral/build/* Core/MRS-Core/build/* Core/Devices/build/* \
-		Core/USB/build/* Core/MRS-FATFS/build/* Core/startup.o
+		Core/USB/USBD/build/* Core/USB/USBMS/build/* Core/MRS-FATFS/build/* Core/startup.o
 	@echo "=====<Totals>===================================="
 	${SIZE} -t --format=berkeley Core/libah4-sdk.a
 	@echo "=====<Building components>======================="
