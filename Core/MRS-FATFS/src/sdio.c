@@ -108,7 +108,7 @@ SD_Error SD_Init( void )
         }
         else
         {
-            clkdiv = SDIO_TRANSFER_CLK_DIV + 1;
+            clkdiv = SDIO_TRANSFER_CLK_DIV;// + 1;
         }
         SDIO_Clock_Set( clkdiv );
 
