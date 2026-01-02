@@ -90,8 +90,12 @@ build-libs:
 	@echo "=====<Totals>===================================="
 	${SIZE} -t --format=berkeley Core/libah4-sdk.a
 	@echo "=====<Building components>======================="
+	if [ -d "components/ICM45686_Barsotion/build" ]; then \
+		rm -rf components/ICM45686_Barsotion/build; \
+	fi
+	mkdir components/ICM45686_Barsotion/build
 	@for component in components/*; do \
-		make -C $$component build-debug; \
+		make -C $$component build-debug PREFIX=${TOOLCHAIN_PREFIX} FLAGS=" ${BUILD_FLAGS} "; \
 	done
 
 .PHONY: clear-libs
