@@ -55,36 +55,54 @@ build-libs:
 	@echo "=====<Compiling startup file>===================="
 	${CC} ${BUILD_FLAGS} -c Core/startup.S -o Core/startup.o
 	@echo "=====<Compiling MRS core libs>==================="
-	mkdir Core/MRS-Core/build || echo "build dir already created."
+	if [ -d "Core/MRS-Core/build" ]; then \
+		rm -rf Core/MRS-Core/build; \
+	fi
+	mkdir Core/MRS-Core/build
 	for source in Core/MRS-Core/*.c; do \
 		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
 		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/MRS-Core/build/$${OUT_FILENAME}.o; \
 	done
 	@echo "=====<Compiling MRS peripheral libs>============="
-	mkdir Core/MRS-Peripheral/build || echo "build dir already created."
+	if [ -d "Core/MRS-Peripheral/build" ]; then \
+		rm -rf Core/MRS-Peripheral/build; \
+	fi
+	mkdir Core/MRS-Peripheral/build
 	for source in Core/MRS-Peripheral/src/*.c; do \
 		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
 		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/MRS-Peripheral/build/$${OUT_FILENAME}.o; \
 	done
 	@echo "=====<Compiling MRS SDIO FATFS lib>=============="
-	mkdir Core/MRS-FATFS/build || echo "build dir already created."
+	if [ -d "Core/MRS-FATFS/build" ]; then \
+		rm -rf Core/MRS-FATFS/build; \
+	fi
+	mkdir Core/MRS-FATFS/build
 	for source in Core/MRS-FATFS/src/*.c; do \
 		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
 		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/MRS-FATFS/build/$${OUT_FILENAME}.o; \
 	done
 	@echo "=====<Compiling Devices libs>===================="
-	mkdir Core/Devices/build || echo "build dir already created."
+	if [ -d "Core/Devices/build" ]; then \
+		rm -rf Core/Devices/build; \
+	fi
+	mkdir Core/Devices/build
 	for source in Core/Devices/src/*.c; do \
 		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
 		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/Devices/build/$${OUT_FILENAME}.o; \
 	done
 	@echo "=====<Compiling USB module>======================"
-	mkdir Core/USB/build || echo "build dir already created."
+	if [ -d "Core/USB/build" ]; then \
+		rm -rf Core/USB/build; \
+	fi
+	mkdir Core/USB/build
 	for source in Core/USB/src/*.c; do \
 		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
 		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/USB/build/$${OUT_FILENAME}.o; \
 	done	
 	@echo "=====<Making an archive>========================="
+	if [ -f "Core/libah4-sdk.a" ]; then \
+		rm Core/libah4-sdk.a; \
+	fi
 #	${AR} rcs Core/libah4-sdk.a Core/MRS-Peripheral/build/* Core/MRS-Core/build/* Core/Devices/build/* \
 		Core/USB/build/* Core/MRS-FATFS/build/* Core/startup.o
 	${AR} rcs Core/libah4-sdk.a Core/MRS-Peripheral/build/* Core/MRS-Core/build/* Core/Devices/build/* \
@@ -112,7 +130,10 @@ clear-libs:
 
 build-project:
 	@echo "=====<Compiling project>========================="
-	@mkdir ${PROJECT_DIR}/build || echo "[ I ] build dir already created."
+	if [ -d "${PROJECT_DIR}/build" ]; then \
+		rm -rf ${PROJECT_DIR}/build; \
+	fi
+	mkdir ${PROJECT_DIR}/build
 	for source in ${PROJECT_DIR}/*.c; do \
 		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
 		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o ${PROJECT_DIR}/build/$${OUT_FILENAME}.o; \
