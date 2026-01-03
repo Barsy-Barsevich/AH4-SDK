@@ -1,6 +1,7 @@
 Core/*.o
 Core/MRS-Core/build/*
 Core/MRS-Peripheral/build/*
+Core/MRS-FATFS/build/*
 Core/Devices/build/*
 Core/USB/build/*
 Core/*.a
