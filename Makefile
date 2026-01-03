@@ -85,8 +85,10 @@ build-libs:
 		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o Core/USB/build/$${OUT_FILENAME}.o; \
 	done	
 	@echo "=====<Making an archive>========================="
-	${AR} rcs Core/libah4-sdk.a Core/MRS-Peripheral/build/* Core/MRS-Core/build/* Core/Devices/build/* \
+#	${AR} rcs Core/libah4-sdk.a Core/MRS-Peripheral/build/* Core/MRS-Core/build/* Core/Devices/build/* \
 		Core/USB/build/* Core/MRS-FATFS/build/* Core/startup.o
+	${AR} rcs Core/libah4-sdk.a Core/MRS-Peripheral/build/* Core/MRS-Core/build/* Core/Devices/build/* \
+		Core/MRS-FATFS/build/* Core/startup.o
 	@echo "=====<Totals>===================================="
 	${SIZE} -t --format=berkeley Core/libah4-sdk.a
 	@echo "=====<Building components>======================="
