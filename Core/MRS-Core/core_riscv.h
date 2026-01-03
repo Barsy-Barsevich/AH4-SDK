@@ -166,7 +166,7 @@ __attribute__( ( always_inline ) ) RV_STATIC_INLINE void __NOP()
  */
 __attribute__( ( always_inline ) ) RV_STATIC_INLINE void NVIC_EnableIRQ(IRQn_Type IRQn)
 {
-  NVIC->IENR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));
+  NVIC->IENR[((uint32_t)(IRQn) >> 5)] = (1U << ((uint32_t)(IRQn) & 0x1FU));
 }
 
 /*********************************************************************
@@ -180,7 +180,7 @@ __attribute__( ( always_inline ) ) RV_STATIC_INLINE void NVIC_EnableIRQ(IRQn_Typ
  */
 __attribute__( ( always_inline ) ) RV_STATIC_INLINE void NVIC_DisableIRQ(IRQn_Type IRQn)
 {
-  NVIC->IRER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));
+  NVIC->IRER[((uint32_t)(IRQn) >> 5)] = (1U << ((uint32_t)(IRQn) & 0x1FU));
 }
 
 /*********************************************************************
@@ -195,7 +195,7 @@ __attribute__( ( always_inline ) ) RV_STATIC_INLINE void NVIC_DisableIRQ(IRQn_Ty
  */
 __attribute__( ( always_inline ) ) RV_STATIC_INLINE uint32_t NVIC_GetStatusIRQ(IRQn_Type IRQn)
 {
-  return((uint32_t) ((NVIC->ISR[(uint32_t)(IRQn) >> 5] & (1 << ((uint32_t)(IRQn) & 0x1F)))?1:0));
+  return((uint32_t) ((NVIC->ISR[(uint32_t)(IRQn) >> 5] & (1U << ((uint32_t)(IRQn) & 0x1FU)))?1U:0U));
 }
 
 /*********************************************************************
@@ -210,7 +210,7 @@ __attribute__( ( always_inline ) ) RV_STATIC_INLINE uint32_t NVIC_GetStatusIRQ(I
  */
 __attribute__( ( always_inline ) ) RV_STATIC_INLINE uint32_t NVIC_GetPendingIRQ(IRQn_Type IRQn)
 {
-  return((uint32_t) ((NVIC->IPR[(uint32_t)(IRQn) >> 5] & (1 << ((uint32_t)(IRQn) & 0x1F)))?1:0));
+  return((uint32_t) ((NVIC->IPR[(uint32_t)(IRQn) >> 5] & (1U << ((uint32_t)(IRQn) & 0x1FU)))?1U:0U));
 }
 
 /*********************************************************************
@@ -224,7 +224,7 @@ __attribute__( ( always_inline ) ) RV_STATIC_INLINE uint32_t NVIC_GetPendingIRQ(
  */
 __attribute__( ( always_inline ) ) RV_STATIC_INLINE void NVIC_SetPendingIRQ(IRQn_Type IRQn)
 {
-  NVIC->IPSR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));
+  NVIC->IPSR[((uint32_t)(IRQn) >> 5)] = (1U << ((uint32_t)(IRQn) & 0x1FU));
 }
 
 /*********************************************************************
@@ -238,7 +238,7 @@ __attribute__( ( always_inline ) ) RV_STATIC_INLINE void NVIC_SetPendingIRQ(IRQn
  */
 __attribute__( ( always_inline ) ) RV_STATIC_INLINE void NVIC_ClearPendingIRQ(IRQn_Type IRQn)
 {
-  NVIC->IPRR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));
+  NVIC->IPRR[((uint32_t)(IRQn) >> 5)] = (1U << ((uint32_t)(IRQn) & 0x1FU));
 }
 
 /*********************************************************************
@@ -253,7 +253,7 @@ __attribute__( ( always_inline ) ) RV_STATIC_INLINE void NVIC_ClearPendingIRQ(IR
  */
 __attribute__( ( always_inline ) ) RV_STATIC_INLINE uint32_t NVIC_GetActive(IRQn_Type IRQn)
 {
-  return((uint32_t)((NVIC->IACTR[(uint32_t)(IRQn) >> 5] & (1 << ((uint32_t)(IRQn) & 0x1F)))?1:0));
+  return((uint32_t)((NVIC->IACTR[(uint32_t)(IRQn) >> 5] & (1U << ((uint32_t)(IRQn) & 0x1FU)))?1U:0U));
 }
 
 /*********************************************************************
@@ -293,7 +293,7 @@ __attribute__( ( always_inline ) ) RV_STATIC_INLINE void NVIC_SetPriority(IRQn_T
  */
 __attribute__( ( always_inline ) ) RV_STATIC_INLINE void __WFI(void)
 {
-  NVIC->SCTLR &= ~(1<<3);	// wfi
+  NVIC->SCTLR &= ~(1U<<3);	// wfi
   asm volatile ("wfi");
 }
 
@@ -309,8 +309,8 @@ __attribute__( ( always_inline ) ) RV_STATIC_INLINE void _SEV(void)
   uint32_t t;
 
   t = NVIC->SCTLR;
-  NVIC->SCTLR |= (1<<3)|(1<<5);
-  NVIC->SCTLR = (NVIC->SCTLR & ~(1<<5)) | ( t & (1<<5));
+  NVIC->SCTLR |= (1U<<3)|(1U<<5);
+  NVIC->SCTLR = (NVIC->SCTLR & ~(1U<<5)) | ( t & (1U<<5));
 }
 
 /*********************************************************************
@@ -322,7 +322,7 @@ __attribute__( ( always_inline ) ) RV_STATIC_INLINE void _SEV(void)
  */
 __attribute__( ( always_inline ) ) RV_STATIC_INLINE void _WFE(void)
 {
-  NVIC->SCTLR |= (1<<3);
+  NVIC->SCTLR |= (1U<<3);
   asm volatile ("wfi");
 }
 
@@ -354,7 +354,7 @@ __attribute__( ( always_inline ) ) RV_STATIC_INLINE void __WFE(void)
  */
 __attribute__( ( always_inline ) ) RV_STATIC_INLINE void SetVTFIRQ(uint32_t addr, IRQn_Type IRQn, uint8_t num, FunctionalState NewState)
 {
-  if(num > 3)  return ;
+  if(num > 3U)  return ;
 
   if (NewState != DISABLE)
   {
@@ -364,7 +364,7 @@ __attribute__( ( always_inline ) ) RV_STATIC_INLINE void SetVTFIRQ(uint32_t addr
   else
   {
       NVIC->VTFIDR[num] = IRQn;
-      NVIC->VTFADDR[num] = ((addr&0xFFFFFFFE)&(~0x1));
+      NVIC->VTFADDR[num] = ((addr&0xFFFFFFFE)&(~0x1U));
   }
 }
 
@@ -377,7 +377,7 @@ __attribute__( ( always_inline ) ) RV_STATIC_INLINE void SetVTFIRQ(uint32_t addr
  */
 __attribute__( ( always_inline ) ) RV_STATIC_INLINE void NVIC_SystemReset(void)
 {
-  NVIC->CFGR = NVIC_KEY3|(1<<7);
+  NVIC->CFGR = NVIC_KEY3|(1U<<7);
 }
 
 /*********************************************************************
