@@ -30,7 +30,7 @@ __attribute__((section(".text.ah4series"))) int ah4_clock_config()
 	{
 		RCC->CFGR0 |= (uint32_t)RCC_HPRE_DIV1;	/* HCLK = SYSCLK */
 		RCC->CFGR0 |= (uint32_t)RCC_PPRE2_DIV1;	/* PCLK2 = HCLK */
-		RCC->CFGR0 |= (uint32_t)RCC_PPRE1_DIV2;	/* PCLK1 = HCLK */
+		RCC->CFGR0 |= (uint32_t)RCC_PPRE1_DIV1;	/* PCLK1 = HCLK */
 		RCC->CFGR2 |= (uint32_t)RCC_PREDIV2_Div4;
 		RCC->CFGR2 |= (uint32_t)RCC_PREDIV1_Div2;
 		RCC->CFGR2 |= (uint32_t)RCC_PREDIV1_Source_HSE;
