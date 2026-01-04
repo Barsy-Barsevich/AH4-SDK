@@ -146,8 +146,8 @@ void ADC_DeInit(ADC_TypeDef *ADCx)
  */
 void ADC_Init(ADC_TypeDef *ADCx, ADC_InitTypeDef *ADC_InitStruct)
 {
-    uint32_t tmpreg1 = 0;
-    uint8_t  tmpreg2 = 0;
+    uint32_t tmpreg1 = 0U;
+    uint8_t  tmpreg2 = 0U;
 
     tmpreg1 = ADCx->CTLR1;
     tmpreg1 &= CTLR1_CLEAR_Mask;
@@ -163,7 +163,7 @@ void ADC_Init(ADC_TypeDef *ADCx, ADC_InitTypeDef *ADC_InitStruct)
 
     tmpreg1 = ADCx->RSQR1;
     tmpreg1 &= RSQR1_CLEAR_Mask;
-    tmpreg2 |= (uint8_t)(ADC_InitStruct->ADC_NbrOfChannel - (uint8_t)1);
+    tmpreg2 |= (uint8_t)(ADC_InitStruct->ADC_NbrOfChannel - (uint8_t)1U);
     tmpreg1 |= (uint32_t)tmpreg2 << 20;
     ADCx->RSQR1 = tmpreg1;
 }
@@ -186,7 +186,7 @@ void ADC_StructInit(ADC_InitTypeDef *ADC_InitStruct)
     ADC_InitStruct->ADC_ContinuousConvMode = DISABLE;
     ADC_InitStruct->ADC_ExternalTrigConv = ADC_ExternalTrigConv_T1_CC1;
     ADC_InitStruct->ADC_DataAlign = ADC_DataAlign_Right;
-    ADC_InitStruct->ADC_NbrOfChannel = 1;
+    ADC_InitStruct->ADC_NbrOfChannel = 1U;
 }
 
 /*********************************************************************
@@ -249,7 +249,7 @@ void ADC_DMACmd(ADC_TypeDef *ADCx, FunctionalState NewState)
  */
 void ADC_ITConfig(ADC_TypeDef *ADCx, uint16_t ADC_IT, FunctionalState NewState)
 {
-    uint8_t itmask = 0;
+    uint8_t itmask = 0U;
 
     itmask = (uint8_t)ADC_IT;
 
@@ -402,12 +402,12 @@ FlagStatus ADC_GetSoftwareStartConvStatus(ADC_TypeDef *ADCx)
  */
 void ADC_DiscModeChannelCountConfig(ADC_TypeDef *ADCx, uint8_t Number)
 {
-    uint32_t tmpreg1 = 0;
-    uint32_t tmpreg2 = 0;
+    uint32_t tmpreg1 = 0U;
+    uint32_t tmpreg2 = 0U;
 
     tmpreg1 = ADCx->CTLR1;
     tmpreg1 &= CTLR1_DISCNUM_Reset;
-    tmpreg2 = Number - 1;
+    tmpreg2 = Number - 1U;
     tmpreg1 |= tmpreg2 << 13;
     ADCx->CTLR1 = tmpreg1;
 }
@@ -477,40 +477,40 @@ void ADC_DiscModeCmd(ADC_TypeDef *ADCx, FunctionalState NewState)
  */
 void ADC_RegularChannelConfig(ADC_TypeDef *ADCx, uint8_t ADC_Channel, uint8_t Rank, uint8_t ADC_SampleTime)
 {
-    uint32_t tmpreg1 = 0, tmpreg2 = 0;
+    uint32_t tmpreg1 = 0U, tmpreg2 = 0U;
 
     if(ADC_Channel > ADC_Channel_9)
     {
         tmpreg1 = ADCx->SAMPTR1;
-        tmpreg2 = SAMPTR1_SMP_Set << (3 * (ADC_Channel - 10));
+        tmpreg2 = SAMPTR1_SMP_Set << (3U * (ADC_Channel - 10U));
         tmpreg1 &= ~tmpreg2;
-        tmpreg2 = (uint32_t)ADC_SampleTime << (3 * (ADC_Channel - 10));
+        tmpreg2 = (uint32_t)ADC_SampleTime << (3U * (ADC_Channel - 10U));
         tmpreg1 |= tmpreg2;
         ADCx->SAMPTR1 = tmpreg1;
     }
     else
     {
         tmpreg1 = ADCx->SAMPTR2;
-        tmpreg2 = SAMPTR2_SMP_Set << (3 * ADC_Channel);
+        tmpreg2 = SAMPTR2_SMP_Set << (3U * ADC_Channel);
         tmpreg1 &= ~tmpreg2;
-        tmpreg2 = (uint32_t)ADC_SampleTime << (3 * ADC_Channel);
+        tmpreg2 = (uint32_t)ADC_SampleTime << (3U * ADC_Channel);
         tmpreg1 |= tmpreg2;
         ADCx->SAMPTR2 = tmpreg1;
     }
 
-    if(Rank < 7)
+    if(Rank < 7U)
     {
         tmpreg1 = ADCx->RSQR3;
-        tmpreg2 = RSQR3_SQ_Set << (5 * (Rank - 1));
+        tmpreg2 = RSQR3_SQ_Set << (5U * (Rank - 1U));
         tmpreg1 &= ~tmpreg2;
-        tmpreg2 = (uint32_t)ADC_Channel << (5 * (Rank - 1));
+        tmpreg2 = (uint32_t)ADC_Channel << (5U * (Rank - 1U));
         tmpreg1 |= tmpreg2;
         ADCx->RSQR3 = tmpreg1;
     }
-    else if(Rank < 13)
+    else if(Rank < 13U)
     {
         tmpreg1 = ADCx->RSQR2;
-        tmpreg2 = RSQR2_SQ_Set << (5 * (Rank - 7));
+        tmpreg2 = RSQR2_SQ_Set << (5U * (Rank - 7U));
         tmpreg1 &= ~tmpreg2;
         tmpreg2 = (uint32_t)ADC_Channel << (5 * (Rank - 7));
         tmpreg1 |= tmpreg2;
@@ -519,9 +519,9 @@ void ADC_RegularChannelConfig(ADC_TypeDef *ADCx, uint8_t ADC_Channel, uint8_t Ra
     else
     {
         tmpreg1 = ADCx->RSQR1;
-        tmpreg2 = RSQR1_SQ_Set << (5 * (Rank - 13));
+        tmpreg2 = RSQR1_SQ_Set << (5U * (Rank - 13U));
         tmpreg1 &= ~tmpreg2;
-        tmpreg2 = (uint32_t)ADC_Channel << (5 * (Rank - 13));
+        tmpreg2 = (uint32_t)ADC_Channel << (5U * (Rank - 13U));
         tmpreg1 |= tmpreg2;
         ADCx->RSQR1 = tmpreg1;
     }
@@ -644,7 +644,7 @@ void ADC_InjectedDiscModeCmd(ADC_TypeDef *ADCx, FunctionalState NewState)
  */
 void ADC_ExternalTrigInjectedConvConfig(ADC_TypeDef *ADCx, uint32_t ADC_ExternalTrigInjecConv)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
 
     tmpreg = ADCx->CTLR2;
     tmpreg &= CTLR2_JEXTSEL_Reset;
@@ -765,32 +765,32 @@ FlagStatus ADC_GetSoftwareStartInjectedConvCmdStatus(ADC_TypeDef *ADCx)
  */
 void ADC_InjectedChannelConfig(ADC_TypeDef *ADCx, uint8_t ADC_Channel, uint8_t Rank, uint8_t ADC_SampleTime)
 {
-    uint32_t tmpreg1 = 0, tmpreg2 = 0, tmpreg3 = 0;
+    uint32_t tmpreg1 = 0U, tmpreg2 = 0U, tmpreg3 = 0U;
 
     if(ADC_Channel > ADC_Channel_9)
     {
         tmpreg1 = ADCx->SAMPTR1;
-        tmpreg2 = SAMPTR1_SMP_Set << (3 * (ADC_Channel - 10));
+        tmpreg2 = SAMPTR1_SMP_Set << (3U * (ADC_Channel - 10U));
         tmpreg1 &= ~tmpreg2;
-        tmpreg2 = (uint32_t)ADC_SampleTime << (3 * (ADC_Channel - 10));
+        tmpreg2 = (uint32_t)ADC_SampleTime << (3U * (ADC_Channel - 10U));
         tmpreg1 |= tmpreg2;
         ADCx->SAMPTR1 = tmpreg1;
     }
     else
     {
         tmpreg1 = ADCx->SAMPTR2;
-        tmpreg2 = SAMPTR2_SMP_Set << (3 * ADC_Channel);
+        tmpreg2 = SAMPTR2_SMP_Set << (3U * ADC_Channel);
         tmpreg1 &= ~tmpreg2;
-        tmpreg2 = (uint32_t)ADC_SampleTime << (3 * ADC_Channel);
+        tmpreg2 = (uint32_t)ADC_SampleTime << (3U * ADC_Channel);
         tmpreg1 |= tmpreg2;
         ADCx->SAMPTR2 = tmpreg1;
     }
 
     tmpreg1 = ADCx->ISQR;
     tmpreg3 = (tmpreg1 & ISQR_JL_Set) >> 20;
-    tmpreg2 = ISQR_JSQ_Set << (5 * (uint8_t)((Rank + 3) - (tmpreg3 + 1)));
+    tmpreg2 = ISQR_JSQ_Set << (5U * (uint8_t)((Rank + 3U) - (tmpreg3 + 1U)));
     tmpreg1 &= ~tmpreg2;
-    tmpreg2 = (uint32_t)ADC_Channel << (5 * (uint8_t)((Rank + 3) - (tmpreg3 + 1)));
+    tmpreg2 = (uint32_t)ADC_Channel << (5U * (uint8_t)((Rank + 3U) - (tmpreg3 + 1U)));
     tmpreg1 |= tmpreg2;
     ADCx->ISQR = tmpreg1;
 }
@@ -808,12 +808,12 @@ void ADC_InjectedChannelConfig(ADC_TypeDef *ADCx, uint8_t ADC_Channel, uint8_t R
  */
 void ADC_InjectedSequencerLengthConfig(ADC_TypeDef *ADCx, uint8_t Length)
 {
-    uint32_t tmpreg1 = 0;
-    uint32_t tmpreg2 = 0;
+    uint32_t tmpreg1 = 0U;
+    uint32_t tmpreg2 = 0U;
 
     tmpreg1 = ADCx->ISQR;
     tmpreg1 &= ISQR_JL_Reset;
-    tmpreg2 = Length - 1;
+    tmpreg2 = Length - 1U;
     tmpreg1 |= tmpreg2 << 20;
     ADCx->ISQR = tmpreg1;
 }
@@ -836,7 +836,7 @@ void ADC_InjectedSequencerLengthConfig(ADC_TypeDef *ADCx, uint8_t Length)
  */
 void ADC_SetInjectedOffset(ADC_TypeDef *ADCx, uint8_t ADC_InjectedChannel, uint16_t Offset)
 {
-    __IO uint32_t tmp = 0;
+    __IO uint32_t tmp = 0U;
 
     tmp = (uint32_t)ADCx;
     tmp += ADC_InjectedChannel;
@@ -860,7 +860,7 @@ void ADC_SetInjectedOffset(ADC_TypeDef *ADCx, uint8_t ADC_InjectedChannel, uint1
  */
 uint16_t ADC_GetInjectedConversionValue(ADC_TypeDef *ADCx, uint8_t ADC_InjectedChannel)
 {
-    __IO uint32_t tmp = 0;
+    __IO uint32_t tmp = 0U;
 
     tmp = (uint32_t)ADCx;
     tmp += ADC_InjectedChannel + IDATAR_Offset;
@@ -895,7 +895,7 @@ uint16_t ADC_GetInjectedConversionValue(ADC_TypeDef *ADCx, uint8_t ADC_InjectedC
  */
 void ADC_AnalogWatchdogCmd(ADC_TypeDef *ADCx, uint32_t ADC_AnalogWatchdog)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
 
     tmpreg = ADCx->CTLR1;
     tmpreg &= CTLR1_AWDMode_Reset;
@@ -953,7 +953,7 @@ void ADC_AnalogWatchdogThresholdsConfig(ADC_TypeDef *ADCx, uint16_t HighThreshol
  */
 void ADC_AnalogWatchdogSingleChannelConfig(ADC_TypeDef *ADCx, uint8_t ADC_Channel)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
 
     tmpreg = ADCx->CTLR1;
     tmpreg &= CTLR1_AWDCH_Reset;
@@ -1049,7 +1049,7 @@ void ADC_ClearFlag(ADC_TypeDef *ADCx, uint8_t ADC_FLAG)
 ITStatus ADC_GetITStatus(ADC_TypeDef *ADCx, uint16_t ADC_IT)
 {
     ITStatus bitstatus = RESET;
-    uint32_t itmask = 0, enablestatus = 0;
+    uint32_t itmask = 0U, enablestatus = 0U;
 
     itmask = ADC_IT >> 8;
     enablestatus = (ADCx->CTLR1 & (uint8_t)ADC_IT);
@@ -1081,7 +1081,7 @@ ITStatus ADC_GetITStatus(ADC_TypeDef *ADCx, uint16_t ADC_IT)
  */
 void ADC_ClearITPendingBit(ADC_TypeDef *ADCx, uint16_t ADC_IT)
 {
-    uint8_t itmask = 0;
+    uint8_t itmask = 0U;
 
     itmask = (uint8_t)(ADC_IT >> 8);
     ADCx->STATR = ~(uint32_t)itmask;
@@ -1101,8 +1101,8 @@ s32 TempSensor_Volt_To_Temper(s32 Value)
     s32 Temper, Refer_Volt, Refer_Temper;
     s32 k = 43;
 
-    Refer_Volt = (s32)((*(u32 *)0x1FFFF720) & 0x0000FFFF);
-    Refer_Temper = (s32)(((*(u32 *)0x1FFFF720) >> 16) & 0x0000FFFF);
+    Refer_Volt = (s32)((*(u32 *)0x1FFFF720UL) & 0x0000FFFFUL);
+    Refer_Temper = (s32)(((*(u32 *)0x1FFFF720UL) >> 16) & 0x0000FFFFUL);
 
     Temper = Refer_Temper - ((Value - Refer_Volt) * 10 + (k >> 1)) / k;
 
@@ -1123,11 +1123,11 @@ void ADC_BufferCmd(ADC_TypeDef *ADCx, FunctionalState NewState)
 {
     if(NewState != DISABLE)
     {
-        ADCx->CTLR1 |= (1 << 26);
+        ADCx->CTLR1 |= (1U << 26);
     }
     else
     {
-        ADCx->CTLR1 &= ~(1 << 26);
+        ADCx->CTLR1 &= ~(1U << 26);
     }
 }
 
@@ -1170,13 +1170,13 @@ int16_t Get_CalibrationValue(ADC_TypeDef *ADCx)
         }
     }
 
-    t = 0;
+    t = 0U;
     for(i = 0; i < 6; i++)
     {
         t += buf[i + 2];
     }
 
-    t = (t / 6) + ((t % 6) / 3);
+    t = (t / 6U) + ((t % 6U) / 3U);
 
     return (int16_t)(2048 - (int16_t)t);
 }

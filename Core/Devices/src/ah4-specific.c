@@ -15,6 +15,7 @@ int ah4_usb_clock_init(void)
 	RCC_USBHSPHYPLLALIVEcmd( ENABLE );
 	// Enable USBHS domain clock
 	RCC_AHBPeriphClockCmd( RCC_AHBPeriph_USBHS, ENABLE );
+	return 0;
 }
 
 

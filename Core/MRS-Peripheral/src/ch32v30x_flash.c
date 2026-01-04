@@ -61,9 +61,9 @@
 #define ValidAddrEnd               (FLASH_BASE + 0x78000)
 
 /* FLASH Size */
-#define Size_256B                  0x100
-#define Size_4KB                   0x1000
-#define Size_32KB                  0x8000
+#define Size_256B                  0x100U
+#define Size_4KB                   0x1000U
+#define Size_32KB                  0x8000U
 
 /*********************************************************************
  * @fn      FLASH_Unlock
@@ -540,7 +540,7 @@ FLASH_Status FLASH_UserOptionByteConfig(uint16_t OB_IWDG, uint16_t OB_STOP, uint
             pbuf[i] = *(uint16_t *)(Addr + 2 * i);
         }
 
-        temp=pbuf[1]&(~0x7);
+        temp=pbuf[1]&(~0x7U);
 
         /* Erase optionbytes */
         FLASH->CTLR |= CR_OPTER_Set;
@@ -928,7 +928,7 @@ void FLASH_ProgramPage_Fast(uint32_t Page_Address, uint32_t *pbuf)
  */
 void FLASH_Access_Clock_Cfg(uint32_t FLASH_Access_CLK)
 {
-    FLASH->CTLR &= ~(1 << 25);
+    FLASH->CTLR &= ~(1U << 25);
     FLASH->CTLR |= FLASH_Access_CLK;
 }
 
@@ -945,12 +945,12 @@ void FLASH_Enhance_Mode(FunctionalState NewState)
 {
     if(NewState)
     {
-        FLASH->CTLR |= (1 << 24);
+        FLASH->CTLR |= (1U << 24);
     }
     else
     {
-        FLASH->CTLR &= ~(1 << 24);
-        FLASH->CTLR |= (1 << 22);
+        FLASH->CTLR &= ~(1U << 24);
+        FLASH->CTLR |= (1U << 22);
     }
 }
 

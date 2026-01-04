@@ -387,11 +387,11 @@ void GPIO_EventOutputCmd(FunctionalState NewState)
 {
     if(NewState)
     {
-        AFIO->ECR |= (1 << 7);
+        AFIO->ECR |= (1U << 7);
     }
     else
     {
-        AFIO->ECR &= ~(1 << 7);
+        AFIO->ECR &= ~(1U << 7);
     }
 }
 
@@ -558,11 +558,11 @@ void GPIO_ETH_MediaInterfaceConfig(uint32_t GPIO_ETH_MediaInterface)
 {
     if(GPIO_ETH_MediaInterface)
     {
-        AFIO->PCFR1 |= (1 << 23);
+        AFIO->PCFR1 |= (1U << 23);
     }
     else
     {
-        AFIO->PCFR1 &= ~(1 << 23);
+        AFIO->PCFR1 &= ~(1U << 23);
     }
 }
 /*********************************************************************
@@ -580,7 +580,7 @@ void GPIO_IPD_Unused(void)
     uint32_t chip = 0;
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB | RCC_APB2Periph_GPIOC|\
                            RCC_APB2Periph_GPIOD | RCC_APB2Periph_GPIOE, ENABLE);
-    chip =  *( uint32_t * )0x1FFFF704 & (~0x000000F0);
+    chip =  *( uint32_t * )0x1FFFF704UL & (~0x000000F0UL);
     switch(chip)
     {
 #ifdef CH32V30x_D8

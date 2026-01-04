@@ -81,24 +81,24 @@ static __I uint8_t ADCPrescTable[4] = {2, 4, 6, 8};
  */
 void RCC_DeInit(void)
 {
-    RCC->CTLR |= (uint32_t)0x00000001;
+    RCC->CTLR |= (uint32_t)0x00000001UL;
 
 #ifdef CH32V30x_D8C
-    RCC->CFGR0 &= (uint32_t)0xF8FF0000;
+    RCC->CFGR0 &= (uint32_t)0xF8FF0000UL;
 #else
-    RCC->CFGR0 &= (uint32_t)0xF0FF0000;
+    RCC->CFGR0 &= (uint32_t)0xF0FF0000UL;
 #endif
 
-    RCC->CTLR &= (uint32_t)0xFEF6FFFF;
-    RCC->CTLR &= (uint32_t)0xFFFBFFFF;
-    RCC->CFGR0 &= (uint32_t)0xFF80FFFF;
+    RCC->CTLR &= (uint32_t)0xFEF6FFFFUL;
+    RCC->CTLR &= (uint32_t)0xFFFBFFFFUL;
+    RCC->CFGR0 &= (uint32_t)0xFF80FFFFUL;
 
 #ifdef CH32V30x_D8C
-    RCC->CTLR &= (uint32_t)0xEBFFFFFF;
-    RCC->INTR = 0x00FF0000;
-    RCC->CFGR2 = 0x00000000;
+    RCC->CTLR &= (uint32_t)0xEBFFFFFFUL;
+    RCC->INTR = 0x00FF0000UL;
+    RCC->CFGR2 = 0x00000000UL;
 #else
-    RCC->INTR = 0x009F0000;
+    RCC->INTR = 0x009F0000UL;
 #endif
 }
 
@@ -201,11 +201,11 @@ void RCC_HSICmd(FunctionalState NewState)
 {
     if(NewState)
     {
-        RCC->CTLR |= (1 << 0);
+        RCC->CTLR |= (1U << 0);
     }
     else
     {
-        RCC->CTLR &= ~(1 << 0);
+        RCC->CTLR &= ~(1U << 0);
     }
 }
 
@@ -264,7 +264,7 @@ void RCC_PLLConfig(uint32_t RCC_PLLSource, uint32_t RCC_PLLMul)
 
     tmpreg = RCC->CFGR0;
 
-    if(((*(uint32_t *)0x1FFFF70C) & (1 << 14)) != (1 << 14))
+    if(((*(uint32_t *)0x1FFFF70CUL) & (1U << 14)) != (1U << 14))
     { /* for other CH32V30x */
         tmpreg &= CFGR0_PLL_Mask;
     }
@@ -292,11 +292,11 @@ void RCC_PLLCmd(FunctionalState NewState)
 {
     if(NewState)
     {
-        RCC->CTLR |= (1 << 24);
+        RCC->CTLR |= (1U << 24);
     }
     else
     {
-        RCC->CTLR &= ~(1 << 24);
+        RCC->CTLR &= ~(1U << 24);
     }
 }
 
@@ -314,7 +314,7 @@ void RCC_PLLCmd(FunctionalState NewState)
  */
 void RCC_SYSCLKConfig(uint32_t RCC_SYSCLKSource)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
 
     tmpreg = RCC->CFGR0;
     tmpreg &= CFGR0_SW_Mask;
@@ -357,7 +357,7 @@ uint8_t RCC_GetSYSCLKSource(void)
  */
 void RCC_HCLKConfig(uint32_t RCC_SYSCLK)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
 
     tmpreg = RCC->CFGR0;
     tmpreg &= CFGR0_HPRE_Reset_Mask;
@@ -382,7 +382,7 @@ void RCC_HCLKConfig(uint32_t RCC_SYSCLK)
  */
 void RCC_PCLK1Config(uint32_t RCC_HCLK)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
 
     tmpreg = RCC->CFGR0;
     tmpreg &= CFGR0_PPRE1_Reset_Mask;
@@ -407,7 +407,7 @@ void RCC_PCLK1Config(uint32_t RCC_HCLK)
  */
 void RCC_PCLK2Config(uint32_t RCC_HCLK)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
 
     tmpreg = RCC->CFGR0;
     tmpreg &= CFGR0_PPRE2_Reset_Mask;
@@ -458,7 +458,7 @@ void RCC_ITConfig(uint8_t RCC_IT, FunctionalState NewState)
  */
 void RCC_ADCCLKConfig(uint32_t RCC_PCLK2)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
 
     tmpreg = RCC->CFGR0;
     tmpreg &= CFGR0_ADCPRE_Reset_Mask;
@@ -513,11 +513,11 @@ void RCC_LSICmd(FunctionalState NewState)
 {
     if(NewState)
     {
-        RCC->RSTSCKR |= (1 << 0);
+        RCC->RSTSCKR |= (1U << 0);
     }
     else
     {
-        RCC->RSTSCKR &= ~(1 << 0);
+        RCC->RSTSCKR &= ~(1U << 0);
     }
 }
 
@@ -553,11 +553,11 @@ void RCC_RTCCLKCmd(FunctionalState NewState)
 {
     if(NewState)
     {
-        RCC->BDCTLR |= (1 << 15);
+        RCC->BDCTLR |= (1U << 15);
     }
     else
     {
-        RCC->BDCTLR &= ~(1 << 15);
+        RCC->BDCTLR &= ~(1U << 15);
     }
 }
 
@@ -574,11 +574,11 @@ void RCC_RTCCLKCmd(FunctionalState NewState)
  */
 void RCC_GetClocksFreq(RCC_ClocksTypeDef *RCC_Clocks)
 {
-    uint32_t tmp = 0, pllmull = 0, pllsource = 0, presc = 0;
-    uint8_t Pll_6_5 = 0;
+    uint32_t tmp = 0U, pllmull = 0U, pllsource = 0U, presc = 0U;
+    uint8_t Pll_6_5 = 0U;
 
 #ifdef CH32V30x_D8C
-    uint8_t Pll2mull = 0;
+    uint8_t Pll2mull = 0U;
 
 #endif
 
@@ -586,41 +586,41 @@ void RCC_GetClocksFreq(RCC_ClocksTypeDef *RCC_Clocks)
 
     switch(tmp)
     {
-        case 0x00:
+        case 0x00U:
             RCC_Clocks->SYSCLK_Frequency = HSI_VALUE;
             break;
 
-        case 0x04:
+        case 0x04U:
             RCC_Clocks->SYSCLK_Frequency = HSE_VALUE;
             break;
 
-        case 0x08:
+        case 0x08U:
             pllmull = RCC->CFGR0 & CFGR0_PLLMull_Mask;
             pllsource = RCC->CFGR0 & CFGR0_PLLSRC_Mask;
 
-            pllmull = (pllmull >> 18) + 2;
+            pllmull = (pllmull >> 18) + 2U;
 
-            if(((*(uint32_t *)0x1FFFF70C) & (1 << 14)) != (1 << 14))
+            if(((*(uint32_t *)0x1FFFF70CUL) & (1U << 14)) != (1U << 14))
             { /* for other CH32V30x */
-                if(pllmull == 17)
-                    pllmull = 18;
+                if(pllmull == 17U)
+                    pllmull = 18U;
             }
             else
             { /* for CH32V307 */
-                if(pllmull == 2)
-                    pllmull = 18;
-                if(pllmull == 15)
+                if(pllmull == 2U)
+                    pllmull = 18U;
+                if(pllmull == 15U)
                 {
-                    pllmull = 13; /* *6.5 */
-                    Pll_6_5 = 1;
+                    pllmull = 13U; /* *6.5 */
+                    Pll_6_5 = 1U;
                 }
-                if(pllmull == 16)
-                    pllmull = 15;
-                if(pllmull == 17)
-                    pllmull = 16;
+                if(pllmull == 16U)
+                    pllmull = 15U;
+                if(pllmull == 17U)
+                    pllmull = 16U;
             }
 
-            if(pllsource == 0x00)
+            if(pllsource == 0x00U)
             {
                 if(EXTEN->EXTEN_CTR & EXTEN_PLL_HSI_PRE)
                 {
@@ -643,20 +643,20 @@ void RCC_GetClocksFreq(RCC_ClocksTypeDef *RCC_Clocks)
                     RCC_Clocks->SYSCLK_Frequency = HSE_VALUE * pllmull;
                 }
 #else
-                if(RCC->CFGR2 & (1<<16)){ /* PLL2 */
-                    RCC_Clocks->SYSCLK_Frequency = HSE_VALUE/(((RCC->CFGR2 & 0xF0)>>4) + 1);  /* PREDIV2 */
+                if(RCC->CFGR2 & (1U<<16)){ /* PLL2 */
+                    RCC_Clocks->SYSCLK_Frequency = HSE_VALUE/(((RCC->CFGR2 & 0xF0U)>>4) + 1U);  /* PREDIV2 */
 
-                    Pll2mull = (uint8_t)((RCC->CFGR2 & 0xF00)>>8);
+                    Pll2mull = (uint8_t)((RCC->CFGR2 & 0xF00U)>>8);
 
-                    if(Pll2mull == 0) RCC_Clocks->SYSCLK_Frequency = (RCC_Clocks->SYSCLK_Frequency * 5)>>1;
-                    else if(Pll2mull == 1) RCC_Clocks->SYSCLK_Frequency = (RCC_Clocks->SYSCLK_Frequency * 25)>>1;
-                    else if(Pll2mull == 15) RCC_Clocks->SYSCLK_Frequency = RCC_Clocks->SYSCLK_Frequency * 20;
-                    else  RCC_Clocks->SYSCLK_Frequency = RCC_Clocks->SYSCLK_Frequency * (Pll2mull + 2);
+                    if(Pll2mull == 0U) RCC_Clocks->SYSCLK_Frequency = (RCC_Clocks->SYSCLK_Frequency * 5U)>>1;
+                    else if(Pll2mull == 1U) RCC_Clocks->SYSCLK_Frequency = (RCC_Clocks->SYSCLK_Frequency * 25U)>>1;
+                    else if(Pll2mull == 15U) RCC_Clocks->SYSCLK_Frequency = RCC_Clocks->SYSCLK_Frequency * 20U;
+                    else  RCC_Clocks->SYSCLK_Frequency = RCC_Clocks->SYSCLK_Frequency * (Pll2mull + 2U);
 
-                    RCC_Clocks->SYSCLK_Frequency = RCC_Clocks->SYSCLK_Frequency/((RCC->CFGR2 & 0xF) + 1);  /* PREDIV1 */
+                    RCC_Clocks->SYSCLK_Frequency = RCC_Clocks->SYSCLK_Frequency/((RCC->CFGR2 & 0xFU) + 1U);  /* PREDIV1 */
                 }
                 else{/* HSE */
-                    RCC_Clocks->SYSCLK_Frequency = HSE_VALUE/((RCC->CFGR2 & 0xF) + 1);  /* PREDIV1 */
+                    RCC_Clocks->SYSCLK_Frequency = HSE_VALUE/((RCC->CFGR2 & 0xFU) + 1U);  /* PREDIV1 */
                 }
 
                 RCC_Clocks->SYSCLK_Frequency = RCC_Clocks->SYSCLK_Frequency * pllmull;
@@ -664,8 +664,8 @@ void RCC_GetClocksFreq(RCC_ClocksTypeDef *RCC_Clocks)
 #endif
             }
 
-            if(Pll_6_5 == 1)
-                RCC_Clocks->SYSCLK_Frequency = (RCC_Clocks->SYSCLK_Frequency / 2);
+            if(Pll_6_5 == 1U)
+                RCC_Clocks->SYSCLK_Frequency = (RCC_Clocks->SYSCLK_Frequency / 2U);
 
             break;
 
@@ -904,11 +904,11 @@ void RCC_BackupResetCmd(FunctionalState NewState)
 {
     if(NewState)
     {
-        RCC->BDCTLR |= (1 << 16);
+        RCC->BDCTLR |= (1U << 16);
     }
     else
     {
-        RCC->BDCTLR &= ~(1 << 16);
+        RCC->BDCTLR &= ~(1U << 16);
     }
 }
 
@@ -925,11 +925,11 @@ void RCC_ClockSecuritySystemCmd(FunctionalState NewState)
 {
     if(NewState)
     {
-        RCC->CTLR |= (1 << 19);
+        RCC->CTLR |= (1U << 19);
     }
     else
     {
-        RCC->CTLR &= ~(1 << 19);
+        RCC->CTLR &= ~(1U << 19);
     }
 }
 
@@ -980,17 +980,17 @@ void RCC_MCOConfig(uint8_t RCC_MCO)
  */
 FlagStatus RCC_GetFlagStatus(uint8_t RCC_FLAG)
 {
-    uint32_t tmp = 0;
-    uint32_t statusreg = 0;
+    uint32_t tmp = 0U;
+    uint32_t statusreg = 0U;
 
     FlagStatus bitstatus = RESET;
     tmp = RCC_FLAG >> 5;
 
-    if(tmp == 1)
+    if(tmp == 1U)
     {
         statusreg = RCC->CTLR;
     }
-    else if(tmp == 2)
+    else if(tmp == 2U)
     {
         statusreg = RCC->BDCTLR;
     }
@@ -1001,7 +1001,7 @@ FlagStatus RCC_GetFlagStatus(uint8_t RCC_FLAG)
 
     tmp = RCC_FLAG & FLAG_Mask;
 
-    if((statusreg & ((uint32_t)1 << tmp)) != (uint32_t)RESET)
+    if((statusreg & ((uint32_t)1U << tmp)) != (uint32_t)RESET)
     {
         bitstatus = SET;
     }
@@ -1100,7 +1100,7 @@ void RCC_ClearITPendingBit(uint8_t RCC_IT)
  */
 void RCC_PREDIV1Config(uint32_t RCC_PREDIV1_Source, uint32_t RCC_PREDIV1_Div)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
 
     tmpreg = RCC->CFGR2;
     tmpreg &= ~(CFGR2_PREDIV1 | CFGR2_PREDIV1SRC);
@@ -1122,7 +1122,7 @@ void RCC_PREDIV1Config(uint32_t RCC_PREDIV1_Source, uint32_t RCC_PREDIV1_Div)
  */
 void RCC_PREDIV2Config(uint32_t RCC_PREDIV2_Div)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
 
     tmpreg = RCC->CFGR2;
     tmpreg &= ~CFGR2_PREDIV2;
@@ -1144,7 +1144,7 @@ void RCC_PREDIV2Config(uint32_t RCC_PREDIV2_Div)
  */
 void RCC_PLL2Config(uint32_t RCC_PLL2Mul)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
 
     tmpreg = RCC->CFGR2;
     tmpreg &= ~CFGR2_PLL2MUL;
@@ -1169,11 +1169,11 @@ void RCC_PLL2Cmd(FunctionalState NewState)
 {
     if(NewState)
     {
-        RCC->CTLR |= (1 << 26);
+        RCC->CTLR |= (1U << 26);
     }
     else
     {
-        RCC->CTLR &= ~(1 << 26);
+        RCC->CTLR &= ~(1U << 26);
     }
 }
 
@@ -1191,7 +1191,7 @@ void RCC_PLL2Cmd(FunctionalState NewState)
  */
 void RCC_PLL3Config(uint32_t RCC_PLL3Mul)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
 
     tmpreg = RCC->CFGR2;
     tmpreg &= ~CFGR2_PLL3MUL;
@@ -1213,11 +1213,11 @@ void RCC_PLL3Cmd(FunctionalState NewState)
 {
     if(NewState)
     {
-        RCC->CTLR |= (1 << 28);
+        RCC->CTLR |= (1U << 28);
     }
     else
     {
-        RCC->CTLR &= ~(1 << 28);
+        RCC->CTLR &= ~(1U << 28);
     }
 }
 
@@ -1238,7 +1238,7 @@ void RCC_PLL3Cmd(FunctionalState NewState)
  */
 void RCC_USBFSCLKConfig(uint32_t RCC_USBFSCLKSource)
 {
-    RCC->CFGR0 &= ~(3 << 22);
+    RCC->CFGR0 &= ~(3U << 22);
     RCC->CFGR0 |= RCC_USBFSCLKSource << 22;
 }
 
@@ -1256,7 +1256,7 @@ void RCC_USBFSCLKConfig(uint32_t RCC_USBFSCLKSource)
  */
 void RCC_I2S2CLKConfig(uint32_t RCC_I2S2CLKSource)
 {
-    RCC->CFGR2 &= ~(1 << 17);
+    RCC->CFGR2 &= ~(1U << 17);
     RCC->CFGR2 |= RCC_I2S2CLKSource << 17;
 }
 
@@ -1274,7 +1274,7 @@ void RCC_I2S2CLKConfig(uint32_t RCC_I2S2CLKSource)
  */
 void RCC_I2S3CLKConfig(uint32_t RCC_I2S3CLKSource)
 {
-    RCC->CFGR2 &= ~(1 << 18);
+    RCC->CFGR2 &= ~(1U << 18);
     RCC->CFGR2 |= RCC_I2S3CLKSource << 18;
 }
 
@@ -1315,11 +1315,11 @@ void RCC_ADCCLKADJcmd(FunctionalState NewState)
 {
     if(NewState != DISABLE)
     {
-        RCC->CFGR0 |= (1 << 31);
+        RCC->CFGR0 |= (1U << 31);
     }
     else
     {
-        RCC->CFGR0 &= ~(1 << 31);
+        RCC->CFGR0 &= ~(1U << 31);
     }
 }
 
@@ -1336,7 +1336,7 @@ void RCC_ADCCLKADJcmd(FunctionalState NewState)
  */
 void RCC_RNGCLKConfig(uint32_t RCC_RNGCLKSource)
 {
-    RCC->CFGR2 &= ~(1 << 19);
+    RCC->CFGR2 &= ~(1U << 19);
     RCC->CFGR2 |= RCC_RNGCLKSource << 19;
 }
 
@@ -1354,7 +1354,7 @@ void RCC_RNGCLKConfig(uint32_t RCC_RNGCLKSource)
  */
 void RCC_ETH1GCLKConfig(uint32_t RCC_ETH1GCLKSource)
 {
-    RCC->CFGR2 &= ~(3 << 20);
+    RCC->CFGR2 &= ~(3U << 20);
     RCC->CFGR2 |= RCC_ETH1GCLKSource << 20;
 }
 
@@ -1371,11 +1371,11 @@ void RCC_ETH1G_125Mcmd(FunctionalState NewState)
 {
     if(NewState != DISABLE)
     {
-        RCC->CFGR2 |= (1 << 22);
+        RCC->CFGR2 |= (1U << 22);
     }
     else
     {
-        RCC->CFGR2 &= ~(1 << 22);
+        RCC->CFGR2 &= ~(1U << 22);
     }
 }
 
@@ -1398,7 +1398,7 @@ void RCC_ETH1G_125Mcmd(FunctionalState NewState)
  */
 void RCC_USBHSConfig(uint32_t RCC_USBHS)
 {
-    RCC->CFGR2 &= ~(7 << 24);
+    RCC->CFGR2 &= ~(7U << 24);
     RCC->CFGR2 |= RCC_USBHS << 24;
 }
 
@@ -1415,7 +1415,7 @@ void RCC_USBHSConfig(uint32_t RCC_USBHS)
  */
 void RCC_USBHSPLLCLKConfig(uint32_t RCC_USBHSPLLCLKSource)
 {
-    RCC->CFGR2 &= ~(1 << 27);
+    RCC->CFGR2 &= ~(1U << 27);
     RCC->CFGR2 |= RCC_USBHSPLLCLKSource << 27;
 }
 
@@ -1434,7 +1434,7 @@ void RCC_USBHSPLLCLKConfig(uint32_t RCC_USBHSPLLCLKSource)
  */
 void RCC_USBHSPLLCKREFCLKConfig(uint32_t RCC_USBHSPLLCKREFCLKSource)
 {
-    RCC->CFGR2 &= ~(3 << 28);
+    RCC->CFGR2 &= ~(3U << 28);
     RCC->CFGR2 |= RCC_USBHSPLLCKREFCLKSource << 28;
 }
 
@@ -1451,11 +1451,11 @@ void RCC_USBHSPHYPLLALIVEcmd(FunctionalState NewState)
 {
     if(NewState != DISABLE)
     {
-        RCC->CFGR2 |= (1 << 30);
+        RCC->CFGR2 |= (1U << 30);
     }
     else
     {
-        RCC->CFGR2 &= ~(1 << 30);
+        RCC->CFGR2 &= ~(1U << 30);
     }
 }
 
@@ -1472,6 +1472,6 @@ void RCC_USBHSPHYPLLALIVEcmd(FunctionalState NewState)
  */
 void RCC_USBCLK48MConfig(uint32_t RCC_USBCLK48MSource)
 {
-    RCC->CFGR2 &= ~(1 << 31);
+    RCC->CFGR2 &= ~(1U << 31);
     RCC->CFGR2 |= RCC_USBCLK48MSource << 31;
 }

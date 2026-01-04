@@ -77,10 +77,10 @@ void OPA_Cmd(OPA_Num_TypeDef OPA_NUM, FunctionalState NewState)
 {
     if(NewState == ENABLE)
     {
-        OPA->CR |= (1 << (OPA_NUM * OPA_Total_NUM));
+        OPA->CR |= (1U << (OPA_NUM * OPA_Total_NUM));
     }
     else
     {
-        OPA->CR &= ~(1 << (OPA_NUM * OPA_Total_NUM));
+        OPA->CR &= ~(1U << (OPA_NUM * OPA_Total_NUM));
     }
 }

@@ -15,8 +15,8 @@
 /* BKP registers bit mask */
 
 /* OCTLR register bit mask */
-#define OCTLR_CAL_MASK    ((uint16_t)0xFF80)
-#define OCTLR_MASK        ((uint16_t)0xFC7F)
+#define OCTLR_CAL_MASK    ((uint16_t)0xFF80U)
+#define OCTLR_MASK        ((uint16_t)0xFC7FU)
 
 /*********************************************************************
  * @fn      BKP_DeInit
@@ -46,11 +46,11 @@ void BKP_TamperPinLevelConfig(uint16_t BKP_TamperPinLevel)
 {
     if(BKP_TamperPinLevel)
     {
-        BKP->TPCTLR |= (1 << 1);
+        BKP->TPCTLR |= (1U << 1);
     }
     else
     {
-        BKP->TPCTLR &= ~(1 << 1);
+        BKP->TPCTLR &= ~(1U << 1);
     }
 }
 
@@ -67,11 +67,11 @@ void BKP_TamperPinCmd(FunctionalState NewState)
 {
     if(NewState)
     {
-        BKP->TPCTLR |= (1 << 0);
+        BKP->TPCTLR |= (1U << 0);
     }
     else
     {
-        BKP->TPCTLR &= ~(1 << 0);
+        BKP->TPCTLR &= ~(1U << 0);
     }
 }
 
@@ -88,11 +88,11 @@ void BKP_ITConfig(FunctionalState NewState)
 {
     if(NewState)
     {
-        BKP->TPCSR |= (1 << 2);
+        BKP->TPCSR |= (1U << 2);
     }
     else
     {
-        BKP->TPCSR &= ~(1 << 2);
+        BKP->TPCSR &= ~(1U << 2);
     }
 }
 
@@ -114,7 +114,7 @@ void BKP_ITConfig(FunctionalState NewState)
  */
 void BKP_RTCOutputConfig(uint16_t BKP_RTCOutputSource)
 {
-    uint16_t tmpreg = 0;
+    uint16_t tmpreg = 0U;
 
     tmpreg = BKP->OCTLR;
     tmpreg &= OCTLR_MASK;
@@ -134,7 +134,7 @@ void BKP_RTCOutputConfig(uint16_t BKP_RTCOutputSource)
  */
 void BKP_SetRTCCalibrationValue(uint8_t CalibrationValue)
 {
-    uint16_t tmpreg = 0;
+    uint16_t tmpreg = 0U;
 
     tmpreg = BKP->OCTLR;
     tmpreg &= OCTLR_CAL_MASK;
@@ -154,7 +154,7 @@ void BKP_SetRTCCalibrationValue(uint8_t CalibrationValue)
  */
 void BKP_WriteBackupRegister(uint16_t BKP_DR, uint16_t Data)
 {
-    __IO uint32_t tmp = 0;
+    __IO uint32_t tmp = 0U;
 
     tmp = (uint32_t)BKP_BASE;
     tmp += BKP_DR;
@@ -173,7 +173,7 @@ void BKP_WriteBackupRegister(uint16_t BKP_DR, uint16_t Data)
  */
 uint16_t BKP_ReadBackupRegister(uint16_t BKP_DR)
 {
-    __IO uint32_t tmp = 0;
+    __IO uint32_t tmp = 0U;
 
     tmp = (uint32_t)BKP_BASE;
     tmp += BKP_DR;
@@ -190,7 +190,7 @@ uint16_t BKP_ReadBackupRegister(uint16_t BKP_DR)
  */
 FlagStatus BKP_GetFlagStatus(void)
 {
-    if(BKP->TPCSR & (1 << 8))
+    if(BKP->TPCSR & (1U << 8))
     {
         return SET;
     }
@@ -221,7 +221,7 @@ void BKP_ClearFlag(void)
  */
 ITStatus BKP_GetITStatus(void)
 {
-    if(BKP->TPCSR & (1 << 9))
+    if(BKP->TPCSR & (1U << 9))
     {
         return SET;
     }

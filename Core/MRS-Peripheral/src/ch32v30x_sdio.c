@@ -107,9 +107,9 @@ void SDIO_StructInit(SDIO_InitTypeDef *SDIO_InitStruct)
 void SDIO_ClockCmd(FunctionalState NewState)
 {
     if(NewState)
-        SDIO->CLKCR |= (1 << 8);
+        SDIO->CLKCR |= (1U << 8);
     else
-        SDIO->CLKCR &= ~(1 << 8);
+        SDIO->CLKCR &= ~(1U << 8);
 }
 
 /*********************************************************************
@@ -204,9 +204,9 @@ void SDIO_ITConfig(uint32_t SDIO_IT, FunctionalState NewState)
 void SDIO_DMACmd(FunctionalState NewState)
 {
     if(NewState)
-        SDIO->DCTRL |= (1 << 3);
+        SDIO->DCTRL |= (1U << 3);
     else
-        SDIO->DCTRL &= ~(1 << 3);
+        SDIO->DCTRL &= ~(1U << 3);
 }
 
 /*********************************************************************
@@ -298,7 +298,7 @@ uint32_t SDIO_GetResponse(uint32_t SDIO_RESP)
  */
 void SDIO_DataConfig(SDIO_DataInitTypeDef *SDIO_DataInitStruct)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
 
     SDIO->DTIMER = SDIO_DataInitStruct->SDIO_DataTimeOut;
     SDIO->DLEN = SDIO_DataInitStruct->SDIO_DataLength;
@@ -321,8 +321,8 @@ void SDIO_DataConfig(SDIO_DataInitTypeDef *SDIO_DataInitStruct)
  */
 void SDIO_DataStructInit(SDIO_DataInitTypeDef *SDIO_DataInitStruct)
 {
-    SDIO_DataInitStruct->SDIO_DataTimeOut = 0xFFFFFFFF;
-    SDIO_DataInitStruct->SDIO_DataLength = 0x00;
+    SDIO_DataInitStruct->SDIO_DataTimeOut = 0xFFFFFFFFU;
+    SDIO_DataInitStruct->SDIO_DataLength = 0x00U;
     SDIO_DataInitStruct->SDIO_DataBlockSize = SDIO_DataBlockSize_1b;
     SDIO_DataInitStruct->SDIO_TransferDir = SDIO_TransferDir_ToCard;
     SDIO_DataInitStruct->SDIO_TransferMode = SDIO_TransferMode_Block;
@@ -391,9 +391,9 @@ uint32_t SDIO_GetFIFOCount(void)
 void SDIO_StartSDIOReadWait(FunctionalState NewState)
 {
     if(NewState)
-        SDIO->DCTRL |= (1 << 8);
+        SDIO->DCTRL |= (1U << 8);
     else
-        SDIO->DCTRL &= ~(1 << 8);
+        SDIO->DCTRL &= ~(1U << 8);
 }
 
 /*********************************************************************
@@ -408,9 +408,9 @@ void SDIO_StartSDIOReadWait(FunctionalState NewState)
 void SDIO_StopSDIOReadWait(FunctionalState NewState)
 {
     if(NewState)
-        SDIO->DCTRL |= (1 << 9);
+        SDIO->DCTRL |= (1U << 9);
     else
-        SDIO->DCTRL &= ~(1 << 9);
+        SDIO->DCTRL &= ~(1U << 9);
 }
 
 /*********************************************************************
@@ -427,9 +427,9 @@ void SDIO_StopSDIOReadWait(FunctionalState NewState)
 void SDIO_SetSDIOReadWaitMode(uint32_t SDIO_ReadWaitMode)
 {
     if(SDIO_ReadWaitMode)
-        SDIO->DCTRL |= (1 << 10);
+        SDIO->DCTRL |= (1U << 10);
     else
-        SDIO->DCTRL &= ~(1 << 10);
+        SDIO->DCTRL &= ~(1U << 10);
 }
 
 /*********************************************************************
@@ -444,9 +444,9 @@ void SDIO_SetSDIOReadWaitMode(uint32_t SDIO_ReadWaitMode)
 void SDIO_SetSDIOOperation(FunctionalState NewState)
 {
     if(NewState)
-        SDIO->DCTRL |= (1 << 11);
+        SDIO->DCTRL |= (1U << 11);
     else
-        SDIO->DCTRL &= ~(1 << 11);
+        SDIO->DCTRL &= ~(1U << 11);
 }
 
 /*********************************************************************
@@ -461,9 +461,9 @@ void SDIO_SetSDIOOperation(FunctionalState NewState)
 void SDIO_SendSDIOSuspendCmd(FunctionalState NewState)
 {
     if(NewState)
-        SDIO->CMD |= (1 << 11);
+        SDIO->CMD |= (1U << 11);
     else
-        SDIO->CMD &= ~(1 << 11);
+        SDIO->CMD &= ~(1U << 11);
 }
 
 /*********************************************************************
@@ -478,9 +478,9 @@ void SDIO_SendSDIOSuspendCmd(FunctionalState NewState)
 void SDIO_CommandCompletionCmd(FunctionalState NewState)
 {
     if(NewState)
-        SDIO->CMD |= (1 << 12);
+        SDIO->CMD |= (1U << 12);
     else
-        SDIO->CMD &= ~(1 << 12);
+        SDIO->CMD &= ~(1U << 12);
 }
 
 /*********************************************************************
@@ -495,9 +495,9 @@ void SDIO_CommandCompletionCmd(FunctionalState NewState)
 void SDIO_CEATAITCmd(FunctionalState NewState)
 {
     if(NewState)
-        SDIO->CMD |= (1 << 13);
+        SDIO->CMD |= (1U << 13);
     else
-        SDIO->CMD &= ~(1 << 13);
+        SDIO->CMD &= ~(1U << 13);
 }
 
 /*********************************************************************
@@ -512,9 +512,9 @@ void SDIO_CEATAITCmd(FunctionalState NewState)
 void SDIO_SendCEATACmd(FunctionalState NewState)
 {
     if(NewState)
-        SDIO->CMD |= (1 << 14);
+        SDIO->CMD |= (1U << 14);
     else
-        SDIO->CMD &= ~(1 << 14);
+        SDIO->CMD &= ~(1U << 14);
 }
 
 /*********************************************************************

@@ -45,11 +45,11 @@ void PWR_BackupAccessCmd(FunctionalState NewState)
 {
     if(NewState)
     {
-        PWR->CTLR |= (1 << 8);
+        PWR->CTLR |= (1U << 8);
     }
     else
     {
-        PWR->CTLR &= ~(1 << 8);
+        PWR->CTLR &= ~(1U << 8);
     }
 }
 
@@ -66,11 +66,11 @@ void PWR_PVDCmd(FunctionalState NewState)
 {
     if(NewState)
     {
-        PWR->CTLR |= (1 << 4);
+        PWR->CTLR |= (1U << 4);
     }
     else
     {
-        PWR->CTLR &= ~(1 << 4);
+        PWR->CTLR &= ~(1U << 4);
     }
 }
 
@@ -94,7 +94,7 @@ void PWR_PVDCmd(FunctionalState NewState)
  */
 void PWR_PVDLevelConfig(uint32_t PWR_PVDLevel)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
     tmpreg = PWR->CTLR;
     tmpreg &= CTLR_PLS_MASK;
     tmpreg |= PWR_PVDLevel;
@@ -115,11 +115,11 @@ void PWR_WakeUpPinCmd(FunctionalState NewState)
 {
     if(NewState)
     {
-        PWR->CSR |= (1 << 8);
+        PWR->CSR |= (1U << 8);
     }
     else
     {
-        PWR->CSR &= ~(1 << 8);
+        PWR->CSR &= ~(1U << 8);
     }
 }
 
@@ -139,13 +139,13 @@ void PWR_WakeUpPinCmd(FunctionalState NewState)
  */
 void PWR_EnterSTOPMode(uint32_t PWR_Regulator, uint8_t PWR_STOPEntry)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
     tmpreg = PWR->CTLR;
     tmpreg &= CTLR_DS_MASK;
     tmpreg |= PWR_Regulator;
     PWR->CTLR = tmpreg;
 
-    NVIC->SCTLR |= (1 << 2);
+    NVIC->SCTLR |= (1U << 2);
 
     if(PWR_STOPEntry == PWR_STOPEntry_WFI)
     {
@@ -156,7 +156,7 @@ void PWR_EnterSTOPMode(uint32_t PWR_Regulator, uint8_t PWR_STOPEntry)
         __WFE();
     }
 
-    NVIC->SCTLR &= ~(1 << 2);
+    NVIC->SCTLR &= ~(1U << 2);
 }
 
 /*********************************************************************
@@ -170,7 +170,7 @@ void PWR_EnterSTANDBYMode(void)
 {
     PWR->CTLR |= PWR_CTLR_CWUF;
     PWR->CTLR |= PWR_CTLR_PDDS;
-    NVIC->SCTLR |= (1 << 2);
+    NVIC->SCTLR |= (1U << 2);
 
     __WFI();
 }
@@ -227,18 +227,18 @@ void PWR_ClearFlag(uint32_t PWR_FLAG)
  */
 void PWR_EnterSTANDBYMode_RAM(void)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
     tmpreg = PWR->CTLR;
 
     tmpreg |= PWR_CTLR_CWUF;
     tmpreg |= PWR_CTLR_PDDS;
 
     //2K+30K in standby w power.
-    tmpreg |= (0x1 << 16) | (0x1 << 17);
+    tmpreg |= (0x1U << 16) | (0x1U << 17);
 
     PWR->CTLR = tmpreg;
 
-    NVIC->SCTLR |= (1 << 2);
+    NVIC->SCTLR |= (1U << 2);
 
     __WFI();
 }
@@ -252,20 +252,20 @@ void PWR_EnterSTANDBYMode_RAM(void)
  */
 void PWR_EnterSTANDBYMode_RAM_LV(void)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
     tmpreg = PWR->CTLR;
 
     tmpreg |= PWR_CTLR_CWUF;
     tmpreg |= PWR_CTLR_PDDS;
 
     //2K+30K in standby power.
-    tmpreg |= (0x1 << 16) | (0x1 << 17);
+    tmpreg |= (0x1U << 16) | (0x1U << 17);
     //2K+30K in standby LV .
-    tmpreg |= (0x1 << 20);
+    tmpreg |= (0x1U << 20);
 
     PWR->CTLR = tmpreg;
 
-    NVIC->SCTLR |= (1 << 2);
+    NVIC->SCTLR |= (1U << 2);
 
     __WFI();
 }
@@ -286,11 +286,11 @@ void PWR_EnterSTANDBYMode_RAM_VBAT_EN(void)
     tmpreg |= PWR_CTLR_PDDS;
 
     //2K+30K in standby power (VBAT Enable).
-    tmpreg |= (0x1 << 18) | (0x1 << 19);
+    tmpreg |= (0x1U << 18) | (0x1U << 19);
 
     PWR->CTLR = tmpreg;
 
-    NVIC->SCTLR |= (1 << 2);
+    NVIC->SCTLR |= (1U << 2);
 
     __WFI();
 }
@@ -304,20 +304,20 @@ void PWR_EnterSTANDBYMode_RAM_VBAT_EN(void)
  */
 void PWR_EnterSTANDBYMode_RAM_LV_VBAT_EN(void)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
     tmpreg = PWR->CTLR;
 
     tmpreg |= PWR_CTLR_CWUF;
     tmpreg |= PWR_CTLR_PDDS;
 
     //2K+30K in standby power (VBAT Enable).
-    tmpreg |= (0x1 << 18) | (0x1 << 19);
+    tmpreg |= (0x1U << 18) | (0x1U << 19);
     //2K+30K in standby LV .
-    tmpreg |= (0x1 << 20);
+    tmpreg |= (0x1U << 20);
 
     PWR->CTLR = tmpreg;
 
-    NVIC->SCTLR |= (1 << 2);
+    NVIC->SCTLR |= (1U << 2);
 
     __WFI();
 }
@@ -338,15 +338,15 @@ void PWR_EnterSTANDBYMode_RAM_LV_VBAT_EN(void)
  */
 void PWR_EnterSTOPMode_RAM_LV(uint32_t PWR_Regulator, uint8_t PWR_STOPEntry)
 {
-    uint32_t tmpreg = 0;
+    uint32_t tmpreg = 0U;
     tmpreg = PWR->CTLR;
     tmpreg &= CTLR_DS_MASK;
     tmpreg |= PWR_Regulator;
 
-    tmpreg |= (0x1 << 20);
+    tmpreg |= (0x1U << 20);
     PWR->CTLR = tmpreg;
 
-    NVIC->SCTLR |= (1 << 2);
+    NVIC->SCTLR |= (1U << 2);
 
     if(PWR_STOPEntry == PWR_STOPEntry_WFI)
     {
@@ -357,5 +357,5 @@ void PWR_EnterSTOPMode_RAM_LV(uint32_t PWR_Regulator, uint8_t PWR_STOPEntry)
         __WFE();
     }
 
-    NVIC->SCTLR &= ~(1 << 2);
+    NVIC->SCTLR &= ~(1U << 2);
 }

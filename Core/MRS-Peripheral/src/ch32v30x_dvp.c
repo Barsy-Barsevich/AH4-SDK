@@ -65,7 +65,7 @@ void DVP_Mode(uint8_t s, DVP_Data_ModeTypeDef i)
     }
     else
     {
-        DVP->CR0 &= ~(3 << 4);
+        DVP->CR0 &= ~(3U << 4);
     }
 
     if(i)
