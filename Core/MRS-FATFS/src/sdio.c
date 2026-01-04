@@ -531,7 +531,7 @@ SD_Error SD_EnableWideBusOperation( u32 wmode )
             errorstatus = SDEnWideBus( wmode );
             if( SD_OK == errorstatus )
             {
-                SDIO->CLKCR &= ~( 3 << 11 );
+                SDIO->CLKCR &= ~( 3U << 11 );
                 SDIO->CLKCR |= ( u16 )wmode << 11;
                 SDIO->CLKCR |= 0 << 14;
             }
@@ -1397,7 +1397,8 @@ SD_Error SD_WriteMultiBlocks( u8 *buf, long long addr, u16 blksize, u32 nblks )
     }
     return errorstatus;
 }
-void SDIO_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
+// void SDIO_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
+void SDIO_IRQHandler(void) __attribute__((naked));
 
 /*********************************************************************
  * @fn      SDIO_IRQHandler
@@ -1408,7 +1409,8 @@ void SDIO_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
  */
 void SDIO_IRQHandler( void )
 {
-    SD_ProcessIRQSrc();
+    // SD_ProcessIRQSrc();
+    __asm volatile("call SD_ProcessIRQSrc; mret");
 }
 
 /*********************************************************************
@@ -1420,7 +1422,7 @@ void SDIO_IRQHandler( void )
  */
 SD_Error SD_ProcessIRQSrc( void )
 {
-    if( SDIO->STA & ( 1 << 8 ) )
+    if( SDIO->STA & ( 1U << 8 ) )
     {
         if( StopCondition == 1 )
         {
@@ -1437,43 +1439,43 @@ SD_Error SD_ProcessIRQSrc( void )
         {
             TransferError = SD_OK;
         }
-        SDIO->ICR |= 1 << 8;
-        SDIO->MASK &= ~( ( 1 << 1 ) | ( 1 << 3 ) | ( 1 << 8 ) | ( 1 << 14 ) | ( 1 << 15 ) | ( 1 << 4 ) | ( 1 << 5 ) | ( 1 << 9 ) );
+        SDIO->ICR |= 1U << 8;
+        SDIO->MASK &= ~( ( 1U << 1 ) | ( 1U << 3 ) | ( 1U << 8 ) | ( 1U << 14 ) | ( 1U << 15 ) | ( 1U << 4 ) | ( 1U << 5 ) | ( 1U << 9 ) );
         TransferEnd = 1;
         return( TransferError );
     }
     if( SDIO_GetFlagStatus( SDIO_FLAG_DCRCFAIL ) != RESET )
     {
         SDIO_ClearFlag( SDIO_FLAG_DCRCFAIL );
-        SDIO->MASK &= ~( ( 1 << 1 ) | ( 1 << 3 ) | ( 1 << 8 ) | ( 1 << 14 ) | ( 1 << 15 ) | ( 1 << 4 ) | ( 1 << 5 ) | ( 1 << 9 ) );
+        SDIO->MASK &= ~( ( 1U << 1 ) | ( 1U << 3 ) | ( 1U << 8 ) | ( 1U << 14 ) | ( 1U << 15 ) | ( 1U << 4 ) | ( 1U << 5 ) | ( 1U << 9 ) );
         TransferError = SD_DATA_CRC_FAIL;
         return( SD_DATA_CRC_FAIL );
     }
     if( SDIO_GetFlagStatus( SDIO_FLAG_DTIMEOUT ) != RESET )
     {
         SDIO_ClearFlag( SDIO_FLAG_DTIMEOUT );
-        SDIO->MASK &= ~( ( 1 << 1 ) | ( 1 << 3 ) | ( 1 << 8 ) | ( 1 << 14 ) | ( 1 << 15 ) | ( 1 << 4 ) | ( 1 << 5 ) | ( 1 << 9 ) );
+        SDIO->MASK &= ~( ( 1U << 1 ) | ( 1U << 3 ) | ( 1U << 8 ) | ( 1U << 14 ) | ( 1U << 15 ) | ( 1U << 4 ) | ( 1U << 5 ) | ( 1U << 9 ) );
         TransferError = SD_DATA_TIMEOUT;
         return( SD_DATA_TIMEOUT );
     }
     if( SDIO_GetFlagStatus( SDIO_FLAG_RXOVERR ) != RESET )
     {
         SDIO_ClearFlag( SDIO_FLAG_RXOVERR );
-        SDIO->MASK &= ~( ( 1 << 1 ) | ( 1 << 3 ) | ( 1 << 8 ) | ( 1 << 14 ) | ( 1 << 15 ) | ( 1 << 4 ) | ( 1 << 5 ) | ( 1 << 9 ) );
+        SDIO->MASK &= ~( ( 1U << 1 ) | ( 1U << 3 ) | ( 1U << 8 ) | ( 1U << 14 ) | ( 1U << 15 ) | ( 1U << 4 ) | ( 1U << 5 ) | ( 1U << 9 ) );
         TransferError = SD_RX_OVERRUN;
         return( SD_RX_OVERRUN );
     }
     if( SDIO_GetFlagStatus( SDIO_FLAG_TXUNDERR ) != RESET )
     {
         SDIO_ClearFlag( SDIO_FLAG_TXUNDERR );
-        SDIO->MASK &= ~( ( 1 << 1 ) | ( 1 << 3 ) | ( 1 << 8 ) | ( 1 << 14 ) | ( 1 << 15 ) | ( 1 << 4 ) | ( 1 << 5 ) | ( 1 << 9 ) );
+        SDIO->MASK &= ~( ( 1U << 1 ) | ( 1U << 3 ) | ( 1U << 8 ) | ( 1U << 14 ) | ( 1U << 15 ) | ( 1U << 4 ) | ( 1U << 5 ) | ( 1U << 9 ) );
         TransferError = SD_TX_UNDERRUN;
         return( SD_TX_UNDERRUN );
     }
     if( SDIO_GetFlagStatus( SDIO_FLAG_STBITERR ) != RESET )
     {
         SDIO_ClearFlag( SDIO_FLAG_STBITERR );
-        SDIO->MASK &= ~( ( 1 << 1 ) | ( 1 << 3 ) | ( 1 << 8 ) | ( 1 << 14 ) | ( 1 << 15 ) | ( 1 << 4 ) | ( 1 << 5 ) | ( 1 << 9 ) );
+        SDIO->MASK &= ~( ( 1U << 1 ) | ( 1U << 3 ) | ( 1U << 8 ) | ( 1U << 14 ) | ( 1U << 15 ) | ( 1U << 4 ) | ( 1U << 5 ) | ( 1U << 9 ) );
         TransferError = SD_START_BIT_ERR;
         return( SD_START_BIT_ERR );
     }
