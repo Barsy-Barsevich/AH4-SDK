@@ -34,6 +34,7 @@ __attribute__((section(".text.ah4series"))) int ah4_clock_config()
 		RCC->CFGR2 |= (uint32_t)RCC_PREDIV2_Div4;
 		RCC->CFGR2 |= (uint32_t)RCC_PREDIV1_Div2;
 		RCC->CFGR2 |= (uint32_t)RCC_PREDIV1_Source_HSE;
+		RCC->CFGR0 |= (uint32_t)RCC_PLLSource_PREDIV1;
 		/*  PLL configuration: PLLCLK = HSE / 2(PREDIV1) * 18(PLLMUL) = 144 MHz */
 		RCC->CFGR2 |= (uint32_t)RCC_PLL2Mul_4;
 		RCC->CFGR0 |= (uint32_t)RCC_PLLMULL18_EXTEN;
@@ -62,7 +63,7 @@ void ah4_time_init(void)
     uint32_t stk_ctrl = 0;
 	stk_ctrl |= (0 << 0); //Turn off the system counter STK and the counter stops counting
 	stk_ctrl |= (0 << 1); //Turn off the counter interrupt
-	stk_ctrl |= (0 << 2); //HCLK/8 for time base
+	stk_ctrl |= (1 << 2); //HCLK for time base
 	stk_ctrl |= (0 << 3); //Continue counting up/down
 	stk_ctrl |= (0 << 4); //Counting up
 	stk_ctrl |= (1 << 5); //Updated to 0 on up counts, updated to the comparison value on down counts
@@ -80,14 +81,32 @@ uint32_t ah4_time_get_ticks(void)
 
 uint32_t ah4_time_get_us(void)
 {
-    uint32_t time = SysTick->CNT & 0xFFFFFFFFUL;
-    return time >> 1;
+	uint64_t time = SysTick->CNT;
+	uint64_t timeh = time >> 32;
+	uint64_t timel = time & 0xFFFFFFFFUL;
+	// 1/144 constant
+	uint32_t constl = 0xc71c71c7UL;
+	uint32_t consth = 0x01c71c71UL;
+	// res = timeh*consth + (timel*consth).h + (timeh*constl).h
+	uint64_t res = timeh * consth;
+	res += (timel * consth) >> 32;
+	res += (timeh * constl) >> 32;
+	return (uint32_t)res;
 }
 
 uint32_t ah4_time_get_ms(void)
 {
-    uint32_t time = SysTick->CNT & 0xFFFFFFFFUL;
-    return time / 2000UL;
+	uint64_t time = SysTick->CNT;
+	uint64_t timeh = time >> 32;
+	uint64_t timel = time & 0xFFFFFFFFUL;
+	// 1/144000 constant
+	uint32_t constl = 0x296a44b8UL;
+	uint32_t consth = 0x00007482UL;
+	// res = timeh*consth + (timel*consth).h + (timeh*constl).h
+	uint64_t res = timeh * consth;
+	res += (timel * consth) >> 32;
+	res += (timeh * constl) >> 32;
+	return (uint32_t)res;
 }
 
 void ah4_time_delay_us(uint32_t time_us)
