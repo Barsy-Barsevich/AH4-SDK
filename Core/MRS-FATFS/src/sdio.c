@@ -30,7 +30,8 @@ u8 convert_from_bytes_to_power_of_two( u16 NumberOfBytes );
 
 static u8 CardType = SDIO_STD_CAPACITY_SD_CARD_V1_1;
 static u32 CSD_Tab[4], CID_Tab[4], RCA = 0;
-static u8 DeviceMode = SD_POLLING_MODE;
+// static u8 DeviceMode = SD_POLLING_MODE;
+static u8 DeviceMode = SD_DMA_MODE;
 static u8 StopCondition = 0;
 volatile SD_Error TransferError = SD_OK;
 volatile u8 TransferEnd = 0;
@@ -74,7 +75,7 @@ SD_Error SD_Init( void )
 
     NVIC_InitStructure.NVIC_IRQChannel = SDIO_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init( &NVIC_InitStructure );
 
