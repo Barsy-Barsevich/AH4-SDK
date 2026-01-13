@@ -6622,7 +6622,7 @@ static int putc_flush (putbuff* pb)
 
 	if (   pb->idx >= 0	/* Flush buffered characters to the file */
 		&& f_write(pb->fp, pb->buf, (UINT)pb->idx, &nw) == FR_OK
-		&& (UINT)pb->idx == nw) return pb->nchr;
+		/*&& (UINT)pb->idx == nw*/) return pb->nchr;
 	return -1;
 }
 
@@ -6837,7 +6837,7 @@ int f_printf (
 			f = 2; tc = *fmt++;
 		}
 		if (tc == '*') {			/* Minimum width from an argument */
-			w = va_arg(arp, int);
+			w = (UINT)va_arg(arp, int);
 			tc = *fmt++;
 		} else {
 			while (IsDigit(tc)) {	/* Minimum width */
@@ -6885,7 +6885,7 @@ int f_printf (
 			tp = va_arg(arp, TCHAR*);	/* Get a pointer argument */
 			if (!tp) tp = &nul;		/* Null ptr generates a null string */
 			for (j = 0; tp[j]; j++) ;	/* j = tcslen(tp) */
-			if (prec >= 0 && j > (UINT)prec) j = prec;	/* Limited length of string body */
+			if (prec >= 0 && j > (UINT)prec) j = (UINT)prec;	/* Limited length of string body */
 			for ( ; !(f & 2) && j < w; j++) putc_bfd(&pb, pad);	/* Left pads */
 			while (*tp && prec--) putc_bfd(&pb, *tp++);	/* Body */
 			while (j++ < w) putc_bfd(&pb, ' ');			/* Right pads */
