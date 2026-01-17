@@ -49,6 +49,11 @@ BUILD_FLAGS += -${OPTIMIZATION_LEVEL}
 
 INCLUDE_DIRS = -I Core/MRS-Peripheral/inc -I Core/MRS-Core -I Core/MRS-FATFS/inc -I Core/Devices/inc -I Core/USB/inc
 INCLUDE_DIRS += -I components/ICM45686_Barsotion/inc
+# add project include dirs if config.txt file exists
+ifneq ($(wildcard ${PROJECT_DIR}/config.txt),)
+    include ${PROJECT_DIR}/config.txt
+    INCLUDE_DIRS += $(addprefix -I${PROJECT_DIR}/, ${PROJECT_INCLUDE_DIRS})
+endif
 
 .PHONY: build-libs
 build-libs:
