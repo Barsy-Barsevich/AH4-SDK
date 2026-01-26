@@ -58,6 +58,9 @@ endif
 BUILD_FLAGS += -${OPTIMIZATION_LEVEL}
 BUILD_FLAGS += ${EXTRA_BUILD_FLAGS}
 LINKER_FLAGS = --gc-sections
+ifneq (${STDLIB_PATH},)
+	LINKER_FLAGS += -L ${STDLIB_PATH}
+endif
 LINKER_FLAGS += ${EXTRA_LINKER_FLAGS}
 
 INCLUDE_DIRS = \
@@ -170,7 +173,7 @@ build-project:
 		done \
 	fi
 	@echo "=====<Linking everything together>==============="
-	${LD} -T Core/linker.ld ${LINKER_FLAGS} --format=elf32-littleriscv --output=${PROJECT_DIR}/firmware.elf -Map ${PROJECT_DIR}/firmware.map ${PROJECT_DIR}/build/*.o Core/*.a -L /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f -lc -lgloss components/*/*.a
+	${LD} -T Core/linker.ld ${LINKER_FLAGS} --format=elf32-littleriscv --output=${PROJECT_DIR}/firmware.elf -Map ${PROJECT_DIR}/firmware.map ${PROJECT_DIR}/build/*.o Core/*.a -lc -lgloss components/*/*.a
 	${OBJCOPY} -O ihex ${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/firmware.hex
 	${OBJCOPY} -O binary ${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/firmware.bin
 	${SIZE} -t --format=berkeley ${PROJECT_DIR}/firmware.elf

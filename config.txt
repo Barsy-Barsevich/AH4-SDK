@@ -1,3 +1,4 @@
+STDLIB_PATH = /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f
 TOOLCHAIN_PREFIX = riscv64-unknown-elf
 OPTIMIZATION_LEVEL = O2
 ARCH = rv32imafc
