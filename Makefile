@@ -35,7 +35,17 @@ OBJDUMP = ${TOOLCHAIN_PREFIX}-objdump
 OBJCOPY = ${TOOLCHAIN_PREFIX}-objcopy
 SIZE = ${TOOLCHAIN_PREFIX}-size
 
-BUILD_FLAGS = -pedantic-errors -Wall -Wextra -Wpedantic -Wduplicated-branches -Wduplicated-cond -Wfloat-equal -Wlogical-op -Wsign-conversion -Wrestrict
+BUILD_FLAGS = -pedantic-errors \
+	-Wall \
+	-Wextra \
+	-Wpedantic \
+	-Wduplicated-branches \
+	-Wduplicated-cond \
+	-Wfloat-equal \
+	-Wlogical-op \
+	-Wsign-conversion \
+	-Wrestrict \
+	-ffunction-sections
 ifneq (${ARCH},'')
 	BUILD_FLAGS += -march=${ARCH}
 endif
@@ -46,8 +56,14 @@ ifneq (${CODE_MODEL},'')
 	BUILD_FLAGS += -mcmodel=${CODE_MODEL}
 endif
 BUILD_FLAGS += -${OPTIMIZATION_LEVEL}
+LINKER_FLAGS = --gc-sections
 
-INCLUDE_DIRS = -I Core/MRS-Peripheral/inc -I Core/MRS-Core -I Core/MRS-FATFS/inc -I Core/Devices/inc -I Core/USB/inc
+INCLUDE_DIRS = \
+	-I Core/MRS-Peripheral/inc \
+	-I Core/MRS-Core \
+	-I Core/MRS-FATFS/inc \
+	-I Core/Devices/inc \
+	-I Core/USB/inc
 INCLUDE_DIRS += -I components/ICM45686_Barsotion/inc
 # add project include dirs if config.txt file exists
 PRJ_SRC_DIRS = 
@@ -152,7 +168,7 @@ build-project:
 		done \
 	fi
 	@echo "=====<Linking everything together>==============="
-	${LD} -T Core/linker.ld --format=elf32-littleriscv --output=${PROJECT_DIR}/firmware.elf -Map ${PROJECT_DIR}/firmware.map ${PROJECT_DIR}/build/*.o Core/*.a -L /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f -lc -lgloss components/*/*.a
+	${LD} -T Core/linker.ld ${LINKER_FLAGS} --format=elf32-littleriscv --output=${PROJECT_DIR}/firmware.elf -Map ${PROJECT_DIR}/firmware.map ${PROJECT_DIR}/build/*.o Core/*.a -L /opt/ex-riscv64-unknown-elf/riscv64-unknown-elf/lib/rv32imafc_zicsr_zaamo_zalrsc/ilp32f -lc -lgloss components/*/*.a
 	${OBJCOPY} -O ihex ${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/firmware.hex
 	${OBJCOPY} -O binary ${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/firmware.bin
 	${SIZE} -t --format=berkeley ${PROJECT_DIR}/firmware.elf
