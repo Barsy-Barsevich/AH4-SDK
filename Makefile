@@ -56,7 +56,9 @@ ifneq (${CODE_MODEL},'')
 	BUILD_FLAGS += -mcmodel=${CODE_MODEL}
 endif
 BUILD_FLAGS += -${OPTIMIZATION_LEVEL}
+BUILD_FLAGS += ${EXTRA_BUILD_FLAGS}
 LINKER_FLAGS = --gc-sections
+LINKER_FLAGS += ${EXTRA_LINKER_FLAGS}
 
 INCLUDE_DIRS = \
 	-I Core/MRS-Peripheral/inc \
