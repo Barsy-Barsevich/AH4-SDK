@@ -79,7 +79,7 @@ ifneq ($(wildcard ${PROJECT_DIR}/config.txt),)
 endif
 
 .PHONY: build-libs
-build-libs:
+build-libs: clear-libs
 	@echo "=====<Compiling startup file>===================="
 	${CC} ${BUILD_FLAGS} -c Core/startup.S -o Core/startup.o
 	@echo "=====<Compiling MRS core libs>==================="
@@ -148,15 +148,30 @@ build-libs:
 
 .PHONY: clear-libs
 clear-libs:
-	rm -r Core/MRS-Core/build
-	rm -r Core/MRS-Peripheral/build
-	rm -r Core/Devices/build
-	rm -r Core/USB/build
-	rm Core/*.o Core/*.a
-	rm -r components/*/build
-	rm components/*/*.a
+	if [ -d "Core/MRS-Core/build" ]; then \
+		rm -r Core/MRS-Core/build; \
+	fi
+	if [ -d "Core/MRS-Peripheral/build" ]; then \
+		rm -r Core/MRS-Peripheral/build; \
+	fi
+	if [ -d "Core/Devices/build" ]; then \
+		rm -r Core/Devices/build; \
+	fi
+	if [ -d "Core/USB/build" ]; then \
+		rm -r Core/USB/build; \
+	fi
+	if [ -f "Core/*.a" ]; then \
+		rm Core/*.a; \
+	fi
+	if [ -d "components/*/build" ]; then \
+		rm -r components/*/build; \
+	fi
+	if [ -f "components/*/*.a" ]; then \
+		rm components/*/*.a; \
+	fi
 
-build-project:
+.PHONY: build-project
+build-project: clear-project
 	@echo "=====<Compiling project>========================="
 	if [ -d "${PROJECT_DIR}/build" ]; then \
 		rm -rf ${PROJECT_DIR}/build; \
@@ -173,16 +188,26 @@ build-project:
 		done \
 	fi
 	@echo "=====<Linking everything together>==============="
-	${LD} -T Core/linker.ld ${LINKER_FLAGS} --format=elf32-littleriscv --output=${PROJECT_DIR}/firmware.elf -Map ${PROJECT_DIR}/firmware.map ${PROJECT_DIR}/build/*.o Core/*.a -lc -lgloss components/*/*.a
+	${LD} -T Core/linker.ld ${LINKER_FLAGS} --format=elf32-littleriscv --output=${PROJECT_DIR}/firmware.elf -Map ${PROJECT_DIR}/firmware.map ${PROJECT_DIR}/build/*.o Core/*.a -lc -lgloss -lm components/*/*.a
 	${OBJCOPY} -O ihex ${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/firmware.hex
 	${OBJCOPY} -O binary ${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/firmware.bin
 	${SIZE} -t --format=berkeley ${PROJECT_DIR}/firmware.elf
 
+.PHONY: disasm-project
 disasm-project:
 	${OBJDUMP} -S ${PROJECT_DIR}/firmware.elf > ${PROJECT_DIR}/firmware.lst
 
+.PHONY: clear-project
 clear-project:
-	rm -r ${PROJECT_DIR}/build
-	rm ${PROJECT_DIR}/*.elf ${PROJECT_DIR}/*.hex
-
-	
+	if [ -d "${PROJECT_DIR}/build" ]; then \
+		rm -rf ${PROJECT_DIR}/build; \
+	fi
+	if [ -f "${PROJECT_DIR}/*.elf" ]; then \
+		rm ${PROJECT_DIR}/*.elf; \
+	fi
+	if [ -f "${PROJECT_DIR}/*.hex" ]; then \
+		rm ${PROJECT_DIR}/*.hex; \
+	fi
+	if [ -f "${PROJECT_DIR}/*.bin" ]; then \
+		rm ${PROJECT_DIR}/*.bin; \
+	fi
