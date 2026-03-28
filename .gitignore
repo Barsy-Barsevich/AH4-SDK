@@ -11,3 +11,5 @@ examples/*/*.bin
 examples/*/*.hex
 examples/*/*.lst
 examples/*/*.map
+.obsidian/*
+.vscode/*
