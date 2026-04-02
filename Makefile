@@ -137,45 +137,31 @@ build-libs: clear-libs
 		Core/MRS-FATFS/build/* Core/startup.o
 	@echo "=====<Totals>===================================="
 	${SIZE} -t --format=berkeley Core/libah4-sdk.a
-	@echo "=====<Building components>======================="
-	if [ -d "components/ICM45686_Barsotion/build" ]; then \
-		rm -rf components/ICM45686_Barsotion/build; \
-	fi
-	mkdir components/ICM45686_Barsotion/build
-	@for component in components/*; do \
-		make -C $$component build PREFIX=${TOOLCHAIN_PREFIX} FLAGS=" ${BUILD_FLAGS} "; \
+# 	@echo "=====<Building components>======================="
+# 	if [ -d "components/ICM45686_Barsotion/build" ]; then \
+# 		rm -rf components/ICM45686_Barsotion/build; \
+# 	fi
+# 	mkdir components/ICM45686_Barsotion/build
+# 	@for component in components/*; do \
+# 		make -C $$component build PREFIX=${TOOLCHAIN_PREFIX} FLAGS=" ${BUILD_FLAGS} "; \
+# 	done
+	@for component in "components/*"; do \
+		cd $$component && make PREFIX="${TOOLCHAIN_PREFIX}" FLAGS="${BUILD_FLAGS}"; \
 	done
 
 .PHONY: clear-libs
 clear-libs:
-	if [ -d "Core/MRS-Core/build" ]; then \
-		rm -r Core/MRS-Core/build; \
-	fi
-	if [ -d "Core/MRS-Peripheral/build" ]; then \
-		rm -r Core/MRS-Peripheral/build; \
-	fi
-	if [ -d "Core/Devices/build" ]; then \
-		rm -r Core/Devices/build; \
-	fi
-	if [ -d "Core/USB/build" ]; then \
-		rm -r Core/USB/build; \
-	fi
-	if [ -f "Core/*.a" ]; then \
-		rm Core/*.a; \
-	fi
-	if [ -d "components/*/build" ]; then \
-		rm -r components/*/build; \
-	fi
-	if [ -f "components/*/*.a" ]; then \
-		rm components/*/*.a; \
-	fi
+	rm -rf Core/MRS-Core/build
+	rm -rf Core/MRS-Peripheral/build
+	rm -rf Core/Devices/build
+	rm -rf Core/USB/build
+	rm -f Core/*.a
+	rm -rf components/*/build
+	rm -f components/*/*.a
 
 .PHONY: build-project
 build-project: clear-project
 	@echo "=====<Compiling project>========================="
-	if [ -d "${PROJECT_DIR}/build" ]; then \
-		rm -rf ${PROJECT_DIR}/build; \
-	fi
 	mkdir ${PROJECT_DIR}/build
 	for source in ${PROJECT_DIR}/*.c; do \
 		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
@@ -188,7 +174,16 @@ build-project: clear-project
 		done \
 	fi
 	@echo "=====<Linking everything together>==============="
-	${LD} -T Core/linker.ld ${LINKER_FLAGS} --format=elf32-littleriscv --output=${PROJECT_DIR}/firmware.elf -Map ${PROJECT_DIR}/firmware.map ${PROJECT_DIR}/build/*.o Core/*.a -lc -lgloss -lm components/*/*.a
+	${LD} -T Core/linker.ld ${LINKER_FLAGS} \
+		--format=elf32-littleriscv \
+		--output=${PROJECT_DIR}/firmware.elf \
+		-Map ${PROJECT_DIR}/firmware.map \
+		${PROJECT_DIR}/build/*.o \
+		Core/*.a \
+		-lc \
+		-lgloss \
+		-lm \
+		components/*/*.a
 	${OBJCOPY} -O ihex ${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/firmware.hex
 	${OBJCOPY} -O binary ${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/firmware.bin
 	${SIZE} -t --format=berkeley ${PROJECT_DIR}/firmware.elf
@@ -199,15 +194,7 @@ disasm-project:
 
 .PHONY: clear-project
 clear-project:
-	if [ -d "${PROJECT_DIR}/build" ]; then \
-		rm -rf ${PROJECT_DIR}/build; \
-	fi
-	if [ -f "${PROJECT_DIR}/*.elf" ]; then \
-		rm ${PROJECT_DIR}/*.elf; \
-	fi
-	if [ -f "${PROJECT_DIR}/*.hex" ]; then \
-		rm ${PROJECT_DIR}/*.hex; \
-	fi
-	if [ -f "${PROJECT_DIR}/*.bin" ]; then \
-		rm ${PROJECT_DIR}/*.bin; \
-	fi
+	rm -rf ${PROJECT_DIR}/build
+	rm -f ${PROJECT_DIR}/*.elf
+	rm -f ${PROJECT_DIR}/*.hex
+	rm -f ${PROJECT_DIR}/*.bin
