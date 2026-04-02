@@ -198,3 +198,6 @@ clear-project:
 	rm -f ${PROJECT_DIR}/*.elf
 	rm -f ${PROJECT_DIR}/*.hex
 	rm -f ${PROJECT_DIR}/*.bin
+	rm -f ${PROJECT_DIR}/*.map
+	rm -f ${PROJECT_DIR}/*.lst
+
