@@ -78,8 +78,22 @@ ifneq ($(wildcard ${PROJECT_DIR}/config.txt),)
 	PRJ_SRC_DIRS += $(addprefix ${PROJECT_DIR}/, ${PROJECT_SOURCES_DIRS})
 endif
 
+COMPONENTS ?= \
+	BMP3XX_Barsotion \
+	ICM45686_Barsotion \
+
 .PHONY: build-libs
-build-libs: clear-libs
+build-libs: clear-libs build-core build-components
+
+.PHONY: build-components
+build-components: ${COMPONENTS}
+
+.PHONY: ${COMPONENTS}
+${COMPONENTS}:
+	cd components/$@ && make PREFIX="${TOOLCHAIN_PREFIX}" FLAGS="${BUILD_FLAGS}"
+
+.PHONY: build-core
+build-core: clear-libs 
 	@echo "=====<Compiling startup file>===================="
 	${CC} ${BUILD_FLAGS} -c Core/startup.S -o Core/startup.o
 	@echo "=====<Compiling MRS core libs>==================="
@@ -137,17 +151,6 @@ build-libs: clear-libs
 		Core/MRS-FATFS/build/* Core/startup.o
 	@echo "=====<Totals>===================================="
 	${SIZE} -t --format=berkeley Core/libah4-sdk.a
-# 	@echo "=====<Building components>======================="
-# 	if [ -d "components/ICM45686_Barsotion/build" ]; then \
-# 		rm -rf components/ICM45686_Barsotion/build; \
-# 	fi
-# 	mkdir components/ICM45686_Barsotion/build
-# 	@for component in components/*; do \
-# 		make -C $$component build PREFIX=${TOOLCHAIN_PREFIX} FLAGS=" ${BUILD_FLAGS} "; \
-# 	done
-	@for component in "components/*"; do \
-		cd $$component && make PREFIX="${TOOLCHAIN_PREFIX}" FLAGS="${BUILD_FLAGS}"; \
-	done
 
 .PHONY: clear-libs
 clear-libs:

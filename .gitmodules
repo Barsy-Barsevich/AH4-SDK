@@ -7,3 +7,6 @@
 [submodule "minichlink-307"]
 	path = minichlink-307
 	url = git@github.com:Barsy-Barsevich/minichlink-307.git
+[submodule "components/BMP3XX_Barsotion"]
+	path = components/BMP3XX_Barsotion
+	url = git@github.com:Barsy-Barsevich/BMP3XX_Barsotion.git
