@@ -35,7 +35,9 @@ OBJDUMP = ${TOOLCHAIN_PREFIX}-objdump
 OBJCOPY = ${TOOLCHAIN_PREFIX}-objcopy
 SIZE = ${TOOLCHAIN_PREFIX}-size
 
-BUILD_FLAGS = -pedantic-errors \
+BUILD_FLAGS = 
+WFLAGS = \
+	-pedantic-errors \
 	-Wall \
 	-Wextra \
 	-Wpedantic \
@@ -45,22 +47,23 @@ BUILD_FLAGS = -pedantic-errors \
 	-Wlogical-op \
 	-Wsign-conversion \
 	-Wrestrict \
-	-ffunction-sections
+
+FFLAGS = \
+	-ffunction-sections \
+
+ARCHFLAGS = 
 ifneq (${ARCH},'')
-	BUILD_FLAGS += -march=${ARCH}
+	ARCHFLAGS += -march=${ARCH}
 endif
 ifneq (${ABI},'')
-	BUILD_FLAGS += -mabi=${ABI}
+	ARCHFLAGS += -mabi=${ABI}
 endif
 ifneq (${CODE_MODEL},'')
-	BUILD_FLAGS += -mcmodel=${CODE_MODEL}
+	ARCHFLAGS += -mcmodel=${CODE_MODEL}
 endif
-BUILD_FLAGS += -${OPTIMIZATION_LEVEL}
+BUILD_FLAGS = $(ARCHFLAGS) -${OPTIMIZATION_LEVEL} $(WFLAGS) $(FFLAGS)
 BUILD_FLAGS += ${EXTRA_BUILD_FLAGS}
 LINKER_FLAGS = --gc-sections
-ifneq (${STDLIB_PATH},)
-	LINKER_FLAGS += -L ${STDLIB_PATH}
-endif
 LINKER_FLAGS += ${EXTRA_LINKER_FLAGS}
 
 INCLUDE_DIRS = \
@@ -154,8 +157,9 @@ clear-libs:
 build-project: clear-project
 	@echo "=====<Compiling project>========================="
 	mkdir ${PROJECT_DIR}/build
-	for source in ${PROJECT_DIR}/*.c; do \
+	@for source in ${PROJECT_DIR}/*.c; do \
 		OUT_FILENAME=`echo $$source | awk -F'/' '{print $$NF}'`; \
+		echo "${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o ${PROJECT_DIR}/build/$${OUT_FILENAME}.o"; \
 		${CC} ${BUILD_FLAGS} ${INCLUDE_DIRS} -c $$source -o ${PROJECT_DIR}/build/$${OUT_FILENAME}.o; \
 	done
 	@if [ -f {PROJECT_DIR}/*.S ]; then \
@@ -165,16 +169,15 @@ build-project: clear-project
 		done \
 	fi
 	@echo "=====<Linking everything together>==============="
-	${LD} -T Core/linker.ld ${LINKER_FLAGS} \
-		--format=elf32-littleriscv \
-		--output=${PROJECT_DIR}/firmware.elf \
-		-Map ${PROJECT_DIR}/firmware.map \
+	${CC} \
+		$(ARCHFLAGS) \
+		-Wl,--gc-sections,-Map,${PROJECT_DIR}/firmware.map \
+		-T Core/linker.ld \
 		${PROJECT_DIR}/build/*.o \
 		Core/*.a \
-		-lc \
-		-lgloss \
-		-lm \
-		components/*/*.a
+		-lc_nano -lm_nano -lgloss -nostartfiles \
+		components/*/*.a \
+		-o ${PROJECT_DIR}/firmware.elf
 	${OBJCOPY} -O ihex ${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/firmware.hex
 	${OBJCOPY} -O binary ${PROJECT_DIR}/firmware.elf ${PROJECT_DIR}/firmware.bin
 	${SIZE} -t --format=berkeley ${PROJECT_DIR}/firmware.elf
